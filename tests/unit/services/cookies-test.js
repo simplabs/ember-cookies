@@ -52,12 +52,6 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       document.cookie = `${COOKIE_NAME}=whatever; path=${window.location.pathname}; expires=${new Date(0).toUTCString()}`;
     });
 
-    it('should not fail when there is no fastBoot service', function() {
-      let subject = this.subject();
-      let fastBoot = subject.get('_fastBoot');
-      expect(fastBoot).to.equal(undefined);
-    });
-
     describe('reading a cookie', function() {
       it('returns the cookie value', function() {
         let value = randomString();
