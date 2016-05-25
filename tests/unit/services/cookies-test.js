@@ -12,7 +12,7 @@ function randomString() {
 }
 
 describeModule('service:cookies', 'CookiesService', {}, function() {
-  function writeOptionsValidation() {
+  function itValidatesWriteOptions() {
     it('throws when the signed option is set', function() {
       expect(() => {
         this.subject().write(COOKIE_NAME, 'test', { signed: true });
@@ -29,6 +29,15 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       expect(() => {
         this.subject().write(COOKIE_NAME, 'test', { expires: new Date(), maxAge: 1000 });
       }).to.throw();
+    });
+  }
+
+  function itReadsAfterWrite() {
+    it('reads a cookie that was just written', function() {
+      let value = randomString();
+      this.subject().write(COOKIE_NAME, value);
+
+      expect(this.subject().read(COOKIE_NAME)).to.eq(value);
     });
   }
 
@@ -140,7 +149,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
     });
 
     describe('writing a cookie', function() {
-      writeOptionsValidation.apply(this);
+      itValidatesWriteOptions.apply(this);
 
       it('writes the value', function() {
         let value = randomString();
@@ -208,12 +217,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
     });
 
-    it('reads a cookie that was just written', function() {
-      let value = randomString();
-      this.subject().write(COOKIE_NAME, value);
-
-      expect(this.subject().read(COOKIE_NAME)).to.eq(value);
-    });
+    itReadsAfterWrite.apply(this);
   });
 
   describe('in the FastBoot server', function() {
@@ -381,7 +385,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
     });
 
     describe('writing a cookie', function() {
-      writeOptionsValidation.apply(this);
+      itValidatesWriteOptions.apply(this);
 
       it('writes the value', function() {
         let value = randomString();
@@ -469,11 +473,6 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
     });
 
-    it('reads a cookie that was just written', function() {
-      let value = randomString();
-      this.subject().write(COOKIE_NAME, value);
-
-      expect(this.subject().read(COOKIE_NAME)).to.eq(value);
-    });
+    itReadsAfterWrite.apply(this);
   });
 });
