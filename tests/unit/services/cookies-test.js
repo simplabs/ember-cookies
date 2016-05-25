@@ -387,7 +387,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
         let value = randomString();
         let subject = this.subject();
 
-        subject._fastBoot.response.headers.append = function(...args) {
+        this.fakeFastBoot.response.headers.append = function(...args) {
           expect(args[0]).to.equal('set-cookie');
           expect(args[1]).to.equal(`${COOKIE_NAME}=${value}`);
         };
@@ -400,7 +400,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
         let encodedValue = encodeURIComponent(value);
         let subject = this.subject();
 
-        subject._fastBoot.response.headers.append = function(...args) {
+        this.fakeFastBoot.response.headers.append = function(...args) {
           expect(args[0]).to.equal('set-cookie');
           expect(args[1]).to.equal(`${COOKIE_NAME}=${encodedValue}`);
         };
@@ -413,7 +413,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
         let subject = this.subject();
         this.fakeFastBoot.request.hostname = domain;
 
-        subject._fastBoot.response.headers.append = function(...args) {
+        this.fakeFastBoot.response.headers.append = function(...args) {
           expect(args[0]).to.equal('set-cookie');
           expect(args[1]).to.equal(`${COOKIE_NAME}=test; domain=${domain}`);
         };
@@ -425,7 +425,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
         let subject = this.subject();
         let date = new Date();
 
-        subject._fastBoot.response.headers.append = function(...args) {
+        this.fakeFastBoot.response.headers.append = function(...args) {
           expect(args[0]).to.equal('set-cookie');
           expect(args[1]).to.equal(`${COOKIE_NAME}=test; expires=${date.toUTCString()}`);
         };
@@ -437,7 +437,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
         let subject = this.subject();
         let maxAge = 10;
 
-        subject._fastBoot.response.headers.append = function(...args) {
+        this.fakeFastBoot.response.headers.append = function(...args) {
           expect(args[0]).to.equal('set-cookie');
           expect(args[1]).to.equal(`${COOKIE_NAME}=test; max-age=${maxAge}`);
         };
@@ -448,7 +448,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       it('sets the secure flag', function() {
         let subject = this.subject();
 
-        subject._fastBoot.response.headers.append = function(...args) {
+        this.fakeFastBoot.response.headers.append = function(...args) {
           expect(args[0]).to.equal('set-cookie');
           expect(args[1]).to.equal(`${COOKIE_NAME}=test; secure`);
         };
@@ -460,7 +460,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
         let subject = this.subject();
         let path = '/sample-path';
 
-        subject._fastBoot.response.headers.append = function(...args) {
+        this.fakeFastBoot.response.headers.append = function(...args) {
           expect(args[0]).to.equal('set-cookie');
           expect(args[1]).to.equal(`${COOKIE_NAME}=test; path=${path}`);
         };
