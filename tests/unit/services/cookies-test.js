@@ -469,13 +469,11 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
     });
 
-    describe('cookie caching', function() {
-      it('reads a cookie that was just written', function() {
-        let value = randomString();
-        this.subject().write(COOKIE_NAME, value);
+    it('reads a cookie that was just written', function() {
+      let value = randomString();
+      this.subject().write(COOKIE_NAME, value);
 
-        expect(this.subject().read(COOKIE_NAME)).to.eq(value);
-      });
+      expect(this.subject().read(COOKIE_NAME)).to.eq(value);
     });
   });
 });
