@@ -475,4 +475,17 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
 
     itReadsAfterWrite.apply(this);
   });
+
+  describe('clearing a cookie', function() {
+    it('clears the cookie', function() {
+      let value = randomString();
+      this.fakeFastBoot.request.cookies[COOKIE_NAME] = { value };
+
+      expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+      this.subject().clear(COOKIE_NAME);
+
+      expect(this.subject().read(COOKIE_NAME)).to.eq(undefined);
+    });
+  });
 });

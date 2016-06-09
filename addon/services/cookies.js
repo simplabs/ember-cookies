@@ -76,6 +76,10 @@ export default Ember.Service.extend({
     }
   },
 
+  clear(name) {
+    this.write(name, null, { expires: new Date('1970-01-01') });
+  },
+
   _writeDocumentCookie(name, value, options = {}) {
     let serializedCookie = this._serializeCookie(name, value, options);
     this.set('_document.cookie', serializedCookie);
