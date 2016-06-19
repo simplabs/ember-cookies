@@ -1,7 +1,5 @@
 import Ember from 'ember';
 import getOwner from 'ember-getowner-polyfill';
-import _object from 'lodash/object';
-import _collection from 'lodash/collection';
 
 const {
   computed,
@@ -28,7 +26,7 @@ export default Ember.Service.extend({
   _documentCookies: computed(function() {
     let all = this.get('_document.cookie').split(';');
 
-    return _collection.reduce(all, (acc, cookie) => {
+    return all.reduce((acc, cookie) => {
       if (!isEmpty(cookie)) {
         let [key, value] = cookie.split('=');
         acc[key.trim()] = value.trim();
@@ -59,7 +57,7 @@ export default Ember.Service.extend({
     if (name) {
       return this._decodeValue(all[name]);
     } else {
-      return _collection.map(all, (value) => this._decodeValue(value));
+      return all.map((value) => this._decodeValue(value));
     }
   },
 
@@ -100,7 +98,7 @@ export default Ember.Service.extend({
 
   _cacheFastBootCookie(name, value, options = {}) {
     let fastBootCache = this.getWithDefault('_fastBootCookiesCache', {});
-    let cachedOptions = _object.assign({}, options);
+    let cachedOptions = Ember.merge({}, options);
 
     if (cachedOptions.maxAge) {
       let expires = new Date();
@@ -116,8 +114,8 @@ export default Ember.Service.extend({
   _filterCachedFastBootCookies(fastBootCookiesCache) {
     let { hostname, path: requestPath, protocol } = this.get('_fastBoot.request');
 
-    return _collection.reduce(fastBootCookiesCache, (acc, cookie, name) => {
-      let { value, options } = cookie;
+    return Object.keys(fastBootCookiesCache).reduce((acc, name) => {
+      let { value, options } = fastBootCookiesCache[name];
       options = options || {};
 
       let { path: optionsPath, domain, expires, secure } = options;
