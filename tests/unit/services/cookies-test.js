@@ -292,7 +292,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
 
       it('returns undefined for a cookie that was written for another domain', function() {
-        this.fakeFastBoot.request.hostname = 'example.com';
+        this.fakeFastBoot.request.host = 'example.com';
         this.fakeFastBoot.request.cookies[COOKIE_NAME] = {
           value: 'value',
           options: {
@@ -304,7 +304,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
 
       it('returns the cookie value for a cookie that was written for the same domain', function() {
-        this.fakeFastBoot.request.hostname = 'example.com';
+        this.fakeFastBoot.request.host = 'example.com';
         let value = randomString();
         this.fakeFastBoot.request.cookies[COOKIE_NAME] = {
           value,
@@ -317,7 +317,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
 
       it('returns the cookie value for a cookie that was written for a parent domain', function() {
-        this.fakeFastBoot.request.hostname = 'sub.example.com';
+        this.fakeFastBoot.request.host = 'sub.example.com';
         let value = randomString();
         this.fakeFastBoot.request.cookies[COOKIE_NAME] = {
           value,
@@ -373,7 +373,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
 
       it('returns undefined for a cookie that was written for another protocol (secure cookies vs. non-secure request)', function() {
-        this.fakeFastBoot.request.hostname = 'http';
+        this.fakeFastBoot.request.host = 'http';
         this.fakeFastBoot.request.cookies[COOKIE_NAME] = {
           value: 'value',
           options: {
@@ -428,7 +428,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       it('sets the cookie domain', function() {
         let domain = 'example.com';
         let subject = this.subject();
-        this.fakeFastBoot.request.hostname = domain;
+        this.fakeFastBoot.request.host = domain;
 
         this.fakeFastBoot.response.headers.append = function(headerName, headerValue) {
           expect(headerName).to.equal('set-cookie');

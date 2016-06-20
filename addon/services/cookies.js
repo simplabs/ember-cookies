@@ -7,8 +7,10 @@ const {
   isEmpty,
   typeOf,
   isNone,
-  assert
+  assert,
+  A
 } = Ember;
+const { keys } = Object;
 
 export default Ember.Service.extend({
   _isFastBoot: reads('_fastBoot.isFastBoot'),
@@ -26,7 +28,7 @@ export default Ember.Service.extend({
   _documentCookies: computed(function() {
     let all = this.get('_document.cookie').split(';');
 
-    return all.reduce((acc, cookie) => {
+    return A(all).reduce((acc, cookie) => {
       if (!isEmpty(cookie)) {
         let [key, value] = cookie.split('=');
         acc[key.trim()] = value.trim();
@@ -57,7 +59,8 @@ export default Ember.Service.extend({
     if (name) {
       return this._decodeValue(all[name]);
     } else {
-      return all.map((value) => this._decodeValue(value));
+      A(keys(all)).forEach((name) => all[name] = this._decodeValue(all[name]));
+      return all;
     }
   },
 
@@ -112,9 +115,9 @@ export default Ember.Service.extend({
   },
 
   _filterCachedFastBootCookies(fastBootCookiesCache) {
-    let { hostname, path: requestPath, protocol } = this.get('_fastBoot.request');
+    let { host, path: requestPath, protocol } = this.get('_fastBoot.request');
 
-    return Object.keys(fastBootCookiesCache).reduce((acc, name) => {
+    return A(keys(fastBootCookiesCache)).reduce((acc, name) => {
       let { value, options } = fastBootCookiesCache[name];
       options = options || {};
 
@@ -124,7 +127,7 @@ export default Ember.Service.extend({
         return acc;
       }
 
-      if (domain && hostname.indexOf(domain) + domain.length !== hostname.length) {
+      if (domain && host.indexOf(domain) + domain.length !== host.length) {
         return acc;
       }
 
