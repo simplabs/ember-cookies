@@ -38,14 +38,19 @@ export default Ember.Service.extend({
   }).volatile(),
 
   _fastBootCookies: computed(function() {
-    let fastBootCookies = this.get('_fastBootCookiesCache');
+    let fastBootCookiesCache = this.get('_fastBootCookiesCache');
 
-    if (!fastBootCookies) {
-      fastBootCookies = this.get('_fastBoot.request.cookies');
-      this.set('_fastBootCookiesCache', fastBootCookies);
+    if (!fastBootCookiesCache) {
+      let fastBootCookies = this.get('_fastBoot.request.cookies');
+      fastBootCookiesCache = A(keys(fastBootCookies)).reduce((acc, name) => {
+        let value = fastBootCookies[name];
+        acc[name] = { value };
+        return acc;
+      }, {});
+      this.set('_fastBootCookiesCache', fastBootCookiesCache);
     }
 
-    return this._filterCachedFastBootCookies(fastBootCookies);
+    return this._filterCachedFastBootCookies(fastBootCookiesCache);
   }).volatile(),
 
   read(name) {
