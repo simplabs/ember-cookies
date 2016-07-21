@@ -120,7 +120,10 @@ export default Ember.Service.extend({
   },
 
   _filterCachedFastBootCookies(fastBootCookiesCache) {
-    let { host, path: requestPath, protocol } = this.get('_fastBoot.request');
+    let { path: requestPath, protocol } = this.get('_fastBoot.request');
+
+    // cannot use deconstruct here
+    let host = this.get('_fastBoot.request.host');
 
     return A(keys(fastBootCookiesCache)).reduce((acc, name) => {
       let { value, options } = fastBootCookiesCache[name];
