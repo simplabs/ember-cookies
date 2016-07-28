@@ -2,7 +2,9 @@
 import { expect } from 'chai';
 import { describeModule, it } from 'ember-mocha';
 import { describe, beforeEach, afterEach } from 'mocha';
+import Ember from 'ember';
 
+const { Object: EmberOject, computed } = Ember;
 const { defineProperty } = Object;
 
 const COOKIE_NAME = 'test-cookie';
@@ -235,18 +237,27 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
 
   describe('in the FastBoot server', function() {
     beforeEach(function() {
+
+      let request = EmberOject.extend({
+        init() {
+          this._super(...arguments);
+          this.cookies = {};
+          this.headers = {
+            append() {}
+          };
+        },
+        host: computed(function() {
+          return this._host;
+        })
+      });
+
       this.fakeFastBoot = {
         response: {
           headers: {
             append() {}
           }
         },
-        request: {
-          cookies: {},
-          headers: {
-            append() {}
-          }
-        }
+        request: request.create()
       };
       this.subject().setProperties({
         _isFastBoot: true,
@@ -283,7 +294,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
 
       it('returns undefined for a cookie that was written for another domain', function() {
-        this.fakeFastBoot.request.host = 'example.com';
+        this.fakeFastBoot.request._host = 'example.com';
         let value = randomString();
         this.subject().write(COOKIE_NAME, value, { domain: 'another-domain.com' });
 
@@ -291,7 +302,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
 
       it('returns the cookie value for a cookie that was written for the same domain', function() {
-        this.fakeFastBoot.request.host = 'example.com';
+        this.fakeFastBoot.request._host = 'example.com';
         let value = randomString();
         this.subject().write(COOKIE_NAME, value, { domain: 'example.com' });
 
@@ -299,7 +310,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
 
       it('returns the cookie value for a cookie that was written for a parent domain', function() {
-        this.fakeFastBoot.request.host = 'sub.example.com';
+        this.fakeFastBoot.request._host = 'sub.example.com';
         let value = randomString();
         this.subject().write(COOKIE_NAME, value, { domain: 'example.com' });
 
@@ -337,7 +348,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
       });
 
       it('returns undefined for a cookie that was written for another protocol (secure cookies vs. non-secure request)', function() {
-        this.fakeFastBoot.request.host = 'http';
+        this.fakeFastBoot.request._host = 'http';
         let value = randomString();
         this.subject().write(COOKIE_NAME, value, { secure: true });
 
@@ -381,7 +392,7 @@ describeModule('service:cookies', 'CookiesService', {}, function() {
 
       it('sets the cookie domain', function() {
         let domain = 'example.com';
-        this.fakeFastBoot.request.host = domain;
+        this.fakeFastBoot.request._host = domain;
 
         this.fakeFastBoot.response.headers.append = function(headerName, headerValue) {
           expect(headerName).to.equal('set-cookie');

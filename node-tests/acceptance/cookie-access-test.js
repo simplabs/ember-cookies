@@ -30,7 +30,8 @@ describe('cookies access', function() {
 
   it('reads and writes cookies in FastBoot', function() {
     return app.startServer({
-      command: 'fastboot'
+      command: 'fastboot',
+      additionalArguments: ['--host 0.0.0.0']
     }).then(function() {
       var value = Math.random().toString(36).substring(2);
 
