@@ -31,7 +31,10 @@ export default Ember.Service.extend({
     return A(all).reduce((acc, cookie) => {
       if (!isEmpty(cookie)) {
         let [key, value] = cookie.split(/=(.+)?/);
-        acc[key.trim()] = value.trim();
+        
+        if (key && value) {
+          acc[key.trim()] = value.trim();
+        }               
       }
       return acc;
     }, {});
