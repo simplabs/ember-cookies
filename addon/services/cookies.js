@@ -131,7 +131,7 @@ export default Ember.Service.extend({
 
       let { path: optionsPath, domain, expires, secure } = options;
 
-      if (optionsPath && requestPath.indexOf(optionsPath) !== 0) {
+      if (optionsPath && requestPath && requestPath.indexOf(optionsPath) !== 0) {
         return acc;
       }
 
