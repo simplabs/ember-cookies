@@ -82,8 +82,9 @@ export default Ember.Service.extend({
     }
   },
 
-  clear(name) {
-    this.write(name, null, { expires: new Date('1970-01-01') });
+  clear(name, options = {}) {
+    options = Object.assign({}, options, { expires: new Date('1970-01-01') });
+    this.write(name, null, options);
   },
 
   _writeDocumentCookie(name, value, options = {}) {
