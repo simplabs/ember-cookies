@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 
 const {
   computed,
@@ -8,7 +7,8 @@ const {
   typeOf,
   isNone,
   assert,
-  A
+  A,
+  getOwner
 } = Ember;
 const { keys } = Object;
 
