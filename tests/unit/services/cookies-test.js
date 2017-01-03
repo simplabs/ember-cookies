@@ -1,7 +1,7 @@
 /* jshint expr:true */
 import { expect } from 'chai';
-import { describeModule, it } from 'ember-mocha';
-import { describe, beforeEach, afterEach } from 'mocha';
+import { describe, it, beforeEach, afterEach } from 'mocha';
+import { setupTest } from 'ember-mocha';
 import Ember from 'ember';
 
 const { Object: EmberOject, computed } = Ember;
@@ -13,7 +13,9 @@ function randomString() {
   return Math.random().toString(36).substring(2);
 }
 
-describeModule('service:cookies', 'CookiesService', {}, function() {
+describe('CookiesService', function() {
+  setupTest('service:cookies');
+
   function itValidatesWriteOptions() {
     it('throws when the signed option is set', function() {
       expect(() => {
