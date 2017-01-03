@@ -42,7 +42,7 @@
     "ember-mocha": "0.8.11",
     "ember-resolver": "^2.0.3",
     "ember-sinon": "0.5.0",
-    "ember-suave": "2.0.1",
+    "ember-suave": "^4.0.1",
     "ember-try": "^0.2.2",
     "glob": "^7.0.3",
     "loader.js": "^4.0.1",
