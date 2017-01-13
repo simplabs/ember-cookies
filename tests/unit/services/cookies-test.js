@@ -74,6 +74,11 @@ describe('CookiesService', function() {
         expect(afterRoundtrip).to.eq(value);
       });
 
+      it('handles invalid values for cookies', function() {
+        document.cookie = '=blank';
+        expect(this.subject().read('blank')).to.be.blank;
+      });
+
       it('returns undefined when the cookie does not exist', function() {
         let afterRoundtrip = this.subject().read('does-not-exist');
 

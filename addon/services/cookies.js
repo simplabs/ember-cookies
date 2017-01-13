@@ -4,6 +4,7 @@ const {
   computed,
   computed: { reads },
   isEmpty,
+  isPresent,
   typeOf,
   isNone,
   assert,
@@ -26,11 +27,12 @@ export default Ember.Service.extend({
   }),
 
   _documentCookies: computed(function() {
-    let all = this.get('_document.cookie').split(';');
+    let all      = this.get('_document.cookie').split(';');
+    let filtered = this._filterDocumentCookies(A(all));
 
-    return A(all).reduce((acc, cookie) => {
+    return filtered.reduce((acc, cookie) => {
       if (!isEmpty(cookie)) {
-        let [key, value] = cookie.split('=');
+        let [key, value] = cookie;
         acc[key.trim()] = value.trim();
       }
       return acc;
@@ -166,6 +168,11 @@ export default Ember.Service.extend({
     } else {
       return decodeURIComponent(value);
     }
+  },
+
+  _filterDocumentCookies(unfilteredCookies) {
+    return unfilteredCookies.map((c) => c.split('='))
+      .filter((c) => isPresent(c[0]) && isPresent(c[1]));
   },
 
   _serializeCookie(name, value, options = {}) {
