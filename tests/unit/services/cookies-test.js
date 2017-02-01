@@ -76,7 +76,7 @@ describe('CookiesService', function() {
 
       it('handles invalid values for cookies', function() {
         document.cookie = '=blank';
-        expect(this.subject().read('')).to.be.blank;
+        expect(this.subject().read('')).to.deep.equal({});
       });
 
       it('returns undefined when the cookie does not exist', function() {
