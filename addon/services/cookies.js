@@ -27,7 +27,7 @@ export default Ember.Service.extend({
   }),
 
   _documentCookies: computed(function() {
-    let all      = this.get('_document.cookie').split(';');
+    let all = this.get('_document.cookie').split(';');
     let filtered = this._filterDocumentCookies(A(all));
 
     return filtered.reduce((acc, cookie) => {
@@ -66,7 +66,7 @@ export default Ember.Service.extend({
     if (name) {
       return this._decodeValue(all[name]);
     } else {
-      A(keys(all)).forEach((name) => all[name] = this._decodeValue(all[name]));
+      A(keys(all)).forEach((name) => (all[name] = this._decodeValue(all[name])));
       return all;
     }
   },
@@ -94,11 +94,11 @@ export default Ember.Service.extend({
   },
 
   _writeFastBootCookie(name, value, options = {}) {
-    let responseHeaders  = this.get('_fastBoot.response.headers');
+    let responseHeaders = this.get('_fastBoot.response.headers');
     let serializedCookie = this._serializeCookie(...arguments);
 
     if (!isEmpty(options.maxAge)) {
-      options.maxAge = options.maxAge * 1000;
+      options.maxAge *= 1000;
     }
 
     this._cacheFastBootCookie(...arguments);
@@ -187,7 +187,7 @@ export default Ember.Service.extend({
     if (!isEmpty(options.maxAge)) {
       cookie = `${cookie}; max-age=${options.maxAge}`;
     }
-    if (!!options.secure) {
+    if (options.secure) {
       cookie = `${cookie}; secure`;
     }
     if (!isEmpty(options.path)) {
