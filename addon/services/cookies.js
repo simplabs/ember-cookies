@@ -9,11 +9,13 @@ const {
   isNone,
   assert,
   A,
-  getOwner
+  getOwner,
+  Service,
+  merge,
 } = Ember;
 const { keys } = Object;
 
-export default Ember.Service.extend({
+export default Service.extend({
   _isFastBoot: reads('_fastBoot.isFastBoot'),
 
   _fastBoot: computed(function() {
@@ -108,7 +110,7 @@ export default Ember.Service.extend({
 
   _cacheFastBootCookie(name, value, options = {}) {
     let fastBootCache = this.getWithDefault('_fastBootCookiesCache', {});
-    let cachedOptions = Ember.merge({}, options);
+    let cachedOptions = merge({}, options);
 
     if (cachedOptions.maxAge) {
       let expires = new Date();

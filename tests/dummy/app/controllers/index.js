@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-const { inject: { service }, computed } = Ember;
+const { inject: { service }, computed, Controller } = Ember;
 const { keys } = Object;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   cookies: service(),
 
   allCookies: computed(function() {
