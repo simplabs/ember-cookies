@@ -49,6 +49,15 @@ script:
   #  to the addon's original dependency state, skipping "cleanup".
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO test --skip-cleanup
 
+deploy:
+  provider: npm
+  email: info@simplabs.com
+  api_key:
+    secure: uzNzJx1gtduJfK/W2rKaSjwQOF/0tm1NbCJPACnNEJfPjI5Bg/NBTh1WVxe+psmcAhawt9xO9z+sfeyzWTyhzph1dma8iFvrT/0BMtMM8lC0waHqN03BcfP/WjNJn07GdISBlZM5XVrebMOvqXDBFME7rsgRRkkKyymQwEgXB7jYyS+e0JH2iURLSyZNYukY6vx6D7nITTBUXYmYtfsbZMyz5v7y2Qzp941gaUTPRGrjnuKWIz1GXo5FxuxHswrbG1xjrckrKpc1lOMe0kh7EHgD6fCLFf2VOCsPq6kKsGh0nJJ2kAemoyVTyuH560+dW5ctyxOENKYHjBlExOpit9fghup+U33Es0xWcsnJzEXvbw0bu1g/hhLemOFUJ/GeSRH2EN3SK0q7t6wie5S20ZRwhHQkoP5OYC/v6pHXcR5J5b4GWa3INa2QB+ZegO8jDatB/31NGILJEXhwQP0A8/NssiUQV877cc6qbSQ7BWAky72QLq0uA65B8vVLBi1PsI4wk+I9IM88cnW1iCfatqx9F2jAh/ACMpLgD+RJtEhvwgeieOHQzfs1W48McHAFO+VeU31ePhT2duujQD72yESaMzxqt1yAcZYv0Ul2JFsb38M6k3/a/ciicLpEj0x7ttOYZQp3oF3Z5kIylPkTkk3I22VmByysO42HJAPl1nA=
+  on:
+    tags: true
+    repo: simplabs/ember-cookies
+
 notifications:
   email: false
   slack:
