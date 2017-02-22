@@ -87,6 +87,8 @@ export default Service.extend({
   },
 
   clear(name, options = {}) {
+    assert('Expires or Max-Age options cannot be set when clearing cookies', isEmpty(options.expires) && isEmpty(options.maxAge));
+
     options.expires = new Date('1970-01-01');
     this.write(name, null, options);
   },

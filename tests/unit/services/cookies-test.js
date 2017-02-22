@@ -36,6 +36,20 @@ describe('CookiesService', function() {
     });
   }
 
+  function itValidatesClearOptions() {
+    it('throws when the expires option is set', function() {
+      expect(() => {
+        this.subject().clear(COOKIE_NAME, 'test', { expires: new Date() });
+      }).to.throw();
+    });
+
+    it('throws when the max-age option is set', function() {
+      expect(() => {
+        this.subject().clear(COOKIE_NAME, 'test', { maxAge: 1000 });
+      }).to.throw();
+    });
+  }
+
   function itReadsAfterWrite() {
     it('reads a cookie that was just written', function() {
       let value = randomString();
@@ -227,6 +241,8 @@ describe('CookiesService', function() {
     });
 
     describe('clearing a cookie', function() {
+      itValidatesClearOptions.apply(this);
+
       it('clears the cookie', function() {
         let value = randomString();
         document.cookie = `${COOKIE_NAME}=${value};`;
@@ -235,7 +251,60 @@ describe('CookiesService', function() {
 
         this.subject().clear(COOKIE_NAME);
 
-        expect(this.subject().read(COOKIE_NAME)).to.eq(undefined);
+        expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+      });
+
+      describe('with a path option', function() {
+        it('clears the cookie set without path', function() {
+          let value = randomString();
+          let pathname = window.location.pathname;
+          let path = pathname.substring(0, pathname.lastIndexOf('/'));
+          this.subject().write(COOKIE_NAME, value);
+
+          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+          this.subject().clear(COOKIE_NAME, { path });
+
+          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+        });
+
+        it('clears the cookie set for a given path', function() {
+          let path = '/';
+          let value = randomString();
+          this.subject().write(COOKIE_NAME, value, { path });
+
+          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+          this.subject().clear(COOKIE_NAME, { path });
+
+          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+        });
+      });
+
+      describe('with a domain option', function() {
+        it('clears the cookie set without domain', function() {
+          let domain = window.location.hostname;
+          let value = randomString();
+          this.subject().write(COOKIE_NAME, value);
+
+          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+          this.subject().clear(COOKIE_NAME, { domain });
+
+          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+        });
+
+        it('clears the cookie set for a given domain', function() {
+          let domain = window.location.hostname;
+          let value = randomString();
+          this.subject().write(COOKIE_NAME, value, { domain });
+
+          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+          this.subject().clear(COOKIE_NAME, { domain });
+
+          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+        });
       });
     });
 
@@ -453,6 +522,8 @@ describe('CookiesService', function() {
     });
 
     describe('clearing a cookie', function() {
+      itValidatesClearOptions.apply(this);
+
       it('clears the cookie', function() {
         let value = randomString();
         this.subject().write(COOKIE_NAME, value);
@@ -461,7 +532,62 @@ describe('CookiesService', function() {
 
         this.subject().clear(COOKIE_NAME);
 
-        expect(this.subject().read(COOKIE_NAME)).to.eq(undefined);
+        expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+      });
+
+      describe('with a path option', function() {
+        it('clears the cookie set without path', function() {
+          this.fakeFastBoot.request.path = '/path';
+          let value = randomString();
+          this.subject().write(COOKIE_NAME, value);
+
+          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+          this.subject().clear(COOKIE_NAME, { path: '/path' });
+
+          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+        });
+
+        it('clears the cookie set for a given path', function() {
+          let path = '/path';
+          this.fakeFastBoot.request.path = path;
+          let value = randomString();
+          this.subject().write(COOKIE_NAME, value, { path });
+
+          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+          this.subject().clear(COOKIE_NAME, { path });
+
+          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+        });
+      });
+
+      describe('with a domain option', function() {
+        it('clears the cookie set without domain', function() {
+          let domain = 'example.com';
+          this.fakeFastBoot.request._host = domain;
+          let value = randomString();
+          this.subject().write(COOKIE_NAME, value);
+
+          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+          this.subject().clear(COOKIE_NAME, { domain });
+
+          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+        });
+
+        it('clears the cookie set for a given domain', function() {
+          let domain = 'example.com';
+          this.fakeFastBoot.request._host = domain;
+          let value = randomString();
+          this.subject().write(COOKIE_NAME, value, { domain });
+
+          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+
+          this.subject().clear(COOKIE_NAME, { domain });
+
+          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
+        });
       });
     });
 
