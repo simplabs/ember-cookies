@@ -51,8 +51,8 @@ The `cookies` service has methods for reading and writing cookies:
   `String`.
 * `write(name, value, options = {})`: writes a cookie with the given name and
   value; options can be used to set `domain`, `expires`, `path` and `secure`.
-* `clear(name, options = {})`: clears the cookie so that future reads do not return a value;
-  options can be used to specify `domain`, `path` or `secure`.
+* `clear(name, options = {})`: clears the cookie so that future reads do not
+  return a value; options can be used to specify `domain`, `path` or `secure`.
 
 ## License
 
