@@ -39,13 +39,13 @@ describe('CookiesService', function() {
   function itValidatesClearOptions() {
     it('throws when the expires option is set', function() {
       expect(() => {
-        this.subject().clear(COOKIE_NAME, 'test', { expires: new Date() });
+        this.subject().clear(COOKIE_NAME, { expires: new Date() });
       }).to.throw();
     });
 
     it('throws when the max-age option is set', function() {
       expect(() => {
-        this.subject().clear(COOKIE_NAME, 'test', { maxAge: 1000 });
+        this.subject().clear(COOKIE_NAME, { maxAge: 1000 });
       }).to.throw();
     });
   }
