@@ -37,7 +37,8 @@ matrix:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - npm config set spin false
+  # if npm version is less than 3.0.0, upgrade to 3
+  - if [[ $(npm -v | cut -d '.' -f 1) -lt 3 ]]; then npm i -g npm@^3; fi
   - npm install -g bower
 
 install:
