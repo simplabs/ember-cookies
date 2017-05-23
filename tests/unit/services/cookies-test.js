@@ -361,6 +361,14 @@ describe('CookiesService', function() {
         expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
       });
 
+      it('does not crash for nully path', function() {
+        this.fakeFastBoot.request.path = undefined;
+        let value = randomString();
+        this.subject().write(COOKIE_NAME, value, { path: '/path' });
+
+        expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+      });
+
       it('returns the cookie value for a cookie that was written for the same path', function() {
         this.fakeFastBoot.request.path = '/path';
         let value = randomString();
