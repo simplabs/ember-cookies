@@ -71,7 +71,7 @@ describe('CookiesService', function() {
         }
         // jscs:enable requireEnhancedObjectLiterals
       };
-      this.subject().setProperties('_document', this.fakeDocument);
+      this.subject().set('_document', this.fakeDocument);
     });
 
     afterEach(function() {
@@ -279,7 +279,7 @@ describe('CookiesService', function() {
         });
 
         it('clears the cookie set for a given path', function() {
-          let path = '/';
+          let path = document.location.pathname;
           let value = randomString();
           this.subject().write(COOKIE_NAME, value, { path });
 
