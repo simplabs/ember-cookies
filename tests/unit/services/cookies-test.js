@@ -238,6 +238,16 @@ describe('CookiesService', function() {
 
         this.subject().write(COOKIE_NAME, 'test', { path: '/sample-path' });
       });
+
+      it('sets multiple options', function() {
+        defineProperty(this.fakeDocument, 'cookie', {
+          set(value) {
+            expect(value).to.include('; path=/sample-path') && expect(value).to.include('; max-age=1000');
+          }
+        });
+
+        this.subject().write(COOKIE_NAME, 'test', { path: '/sample-path', maxAge: 1000 });
+      });
     });
 
     describe('clearing a cookie', function() {
