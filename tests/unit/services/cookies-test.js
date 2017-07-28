@@ -1,10 +1,9 @@
 /* jshint expr:true */
+import EmberOject, { computed } from '@ember/object';
+
 import { expect } from 'chai';
 import { describe, it, beforeEach, afterEach } from 'mocha';
 import { setupTest } from 'ember-mocha';
-import Ember from 'ember';
-
-const { Object: EmberOject, computed } = Ember;
 const { defineProperty } = Object;
 
 const COOKIE_NAME = 'test-cookie';

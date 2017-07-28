@@ -1,18 +1,11 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  computed: { reads },
-  isEmpty,
-  isPresent,
-  typeOf,
-  isNone,
-  assert,
-  A,
-  getOwner,
-  Service,
-  merge,
-} = Ember;
+import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
+import { isNone, typeOf, isPresent, isEmpty } from '@ember/utils';
+import { assert } from '@ember/debug';
+import { A } from '@ember/array';
+import { getOwner } from '@ember/application';
+import Service from '@ember/service';
+import { merge } from '@ember/polyfills';
 const { keys } = Object;
 
 export default Service.extend({
