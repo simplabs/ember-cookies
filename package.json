@@ -48,7 +48,7 @@
     "eslint-plugin-mocha": "^4.11.0",
     "glob": "^7.1.2",
     "loader.js": "^4.5.1",
-    "mocha": "^3.4.2",
+    "mocha": "^4.0.0",
     "request": "^2.81.0",
     "rsvp": "^4.6.1",
     "symlink-or-copy": "^1.1.8"
