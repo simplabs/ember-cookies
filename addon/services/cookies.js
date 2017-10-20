@@ -6,7 +6,8 @@ import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
 import Service from '@ember/service';
 import { merge } from '@ember/polyfills';
-const { keys } = Object;
+const { keys, assign } = Object;
+const DEFAULTS = { raw: false };
 
 export default Service.extend({
   _isFastBoot: reads('_fastBoot.isFastBoot'),
@@ -50,7 +51,10 @@ export default Service.extend({
     return this._filterCachedFastBootCookies(fastBootCookiesCache);
   }).volatile(),
 
-  read(name) {
+  read(name, options = {}) {
+    options = assign({}, DEFAULTS, options || {});
+    assert('Domain, Expires, Max-Age, and Path options cannot be set when reading cookies', isEmpty(options.domain) && isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.path));
+
     let all;
     if (this.get('_isFastBoot')) {
       all = this.get('_fastBootCookies');
@@ -59,18 +63,19 @@ export default Service.extend({
     }
 
     if (name) {
-      return this._decodeValue(all[name]);
+      return this._decodeValue(all[name], options.raw);
     } else {
-      A(keys(all)).forEach((name) => (all[name] = this._decodeValue(all[name])));
+      A(keys(all)).forEach((name) => (all[name] = this._decodeValue(all[name], options.raw)));
       return all;
     }
   },
 
   write(name, value, options = {}) {
+    options = assign({}, DEFAULTS, options || {});
     assert('Cookies cannot be set to be HTTP-only as those cookies would not be accessible by the Ember.js application itself when running in the browser!', !options.httpOnly);
     assert("Cookies cannot be set as signed as signed cookies would not be modifyable in the browser as it has no knowledge of the express server's signing key!", !options.signed);
     assert('Cookies cannot be set with both maxAge and an explicit expiration time!', isEmpty(options.expires) || isEmpty(options.maxAge));
-    value = this._encodeValue(value);
+    value = this._encodeValue(value, options.raw);
 
     if (this.get('_isFastBoot')) {
       this._writeFastBootCookie(name, value, options);
@@ -80,7 +85,7 @@ export default Service.extend({
   },
 
   clear(name, options = {}) {
-    assert('Expires or Max-Age options cannot be set when clearing cookies', isEmpty(options.expires) && isEmpty(options.maxAge));
+    assert('Expires, Max-Age, and raw options cannot be set when clearing cookies', isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.raw));
 
     options.expires = new Date('1970-01-01');
     this.write(name, null, options);
@@ -152,16 +157,18 @@ export default Service.extend({
     }, {});
   },
 
-  _encodeValue(value) {
+  _encodeValue(value, raw) {
     if (isNone(value)) {
       return '';
+    } else if (raw) {
+      return value;
     } else {
       return encodeURIComponent(value);
     }
   },
 
-  _decodeValue(value) {
-    if (isNone(value)) {
+  _decodeValue(value, raw) {
+    if (isNone(value) || raw) {
       return value;
     } else {
       return decodeURIComponent(value);

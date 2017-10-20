@@ -35,16 +35,48 @@ describe('CookiesService', function() {
     });
   }
 
+  function itValidatesReadOptions() {
+    it('throws when the domain option is set for reading', function() {
+      expect(() => {
+        this.subject().read(COOKIE_NAME, { domain: 'example.com' });
+      }).to.throw();
+    });
+
+    it('throws when the expires option is set for reading', function() {
+      expect(() => {
+        this.subject().read(COOKIE_NAME, { expires: new Date() });
+      }).to.throw();
+    });
+
+    it('throws when the max-age option is set for reading', function() {
+      expect(() => {
+        this.subject().clear(COOKIE_NAME, { maxAge: 1000 });
+      }).to.throw();
+    });
+
+    it('throws when the path option is set for reading', function() {
+      expect(() => {
+        this.subject().read(COOKIE_NAME, { path: '/path' });
+      }).to.throw();
+    });
+  }
+
   function itValidatesClearOptions() {
-    it('throws when the expires option is set', function() {
+    it('throws when the expires option is set for clearing', function() {
       expect(() => {
         this.subject().clear(COOKIE_NAME, { expires: new Date() });
       }).to.throw();
     });
 
-    it('throws when the max-age option is set', function() {
+    it('throws when the max-age option is set for clearing', function() {
       expect(() => {
         this.subject().clear(COOKIE_NAME, { maxAge: 1000 });
+      }).to.throw();
+    });
+
+    it('throws when the raw option is set for clearing', function() {
+      expect(() => {
+        this.subject().clear(COOKIE_NAME, { raw: true });
       }).to.throw();
     });
   }
@@ -79,10 +111,28 @@ describe('CookiesService', function() {
     });
 
     describe('reading a cookie', function() {
+      itValidatesReadOptions.apply(this);
+
       it('returns the cookie value', function() {
         let value = randomString();
         document.cookie = `${COOKIE_NAME}=${value};`;
         let afterRoundtrip = this.subject().read(COOKIE_NAME);
+
+        expect(afterRoundtrip).to.eq(value);
+      });
+
+      it('URI-component-decodes the value', function() {
+        let value = '!"§$%&/()=?"';
+        document.cookie = `${COOKIE_NAME}=${encodeURIComponent(value)}`;
+        let afterRoundtrip = this.subject().read(COOKIE_NAME);
+
+        expect(afterRoundtrip).to.eq(value);
+      });
+
+      it("doesn't decode the value when raw is true", function() {
+        let value = '%22%C2%A7%24%25%26%2F%3D%3F';
+        document.cookie = `${COOKIE_NAME}=${value}`;
+        let afterRoundtrip = this.subject().read(COOKIE_NAME, { raw: true });
 
         expect(afterRoundtrip).to.eq(value);
       });
@@ -185,6 +235,13 @@ describe('CookiesService', function() {
         this.subject().write(COOKIE_NAME, value);
 
         expect(document.cookie).to.include(`${COOKIE_NAME}=${encodeURIComponent(value)}`);
+      });
+
+      it("doesn't encode the value when raw is true", function() {
+        let value = '!"§$%&/()=?"';
+        this.subject().write(COOKIE_NAME, value, { raw: true });
+
+        expect(document.cookie).to.include(`${COOKIE_NAME}=${value}`);
       });
 
       it('sets the cookie domain', function() {
@@ -351,11 +408,27 @@ describe('CookiesService', function() {
     });
 
     describe('reading a cookie', function() {
+      itValidatesReadOptions.apply(this);
+
       it('returns the cookie value', function() {
         let value = randomString();
         this.subject().write(COOKIE_NAME, value);
 
         expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+      });
+
+      it('URI-component-decodes the value', function() {
+        let value = '!"§$%&/()=?"';
+        this.subject().write(COOKIE_NAME, value);
+
+        expect(this.subject().read(COOKIE_NAME)).to.eq(value);
+      });
+
+      it("doesn't decode the value when raw is true", function() {
+        let value = '!"§$%&/()=?"';
+        this.subject().write(COOKIE_NAME, value);
+
+        expect(this.subject().read(COOKIE_NAME, { raw: true })).to.eq(encodeURIComponent(value));
       });
 
       it('returns undefined when the cookies does not exist', function() {
@@ -481,6 +554,17 @@ describe('CookiesService', function() {
         };
 
         this.subject().write(COOKIE_NAME, value);
+      });
+
+      it("doesn't encode the value when raw is true", function() {
+        let value = '!"§$%&/()=?"';
+
+        this.fakeFastBoot.response.headers.append = function(headerName, headerValue) {
+          expect(headerName).to.equal('set-cookie');
+          expect(headerValue).to.equal(`${COOKIE_NAME}=${value}`);
+        };
+
+        this.subject().write(COOKIE_NAME, value, { raw: true });
       });
 
       it('sets the cookie domain', function() {
