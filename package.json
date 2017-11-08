@@ -20,7 +20,7 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "6.8.2",
+    "ember-cli-babel": "^6.8.2",
     "ember-getowner-polyfill": "^1.1.0 || ^2.0.0"
   },
   "devDependencies": {
