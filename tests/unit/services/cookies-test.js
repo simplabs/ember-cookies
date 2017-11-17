@@ -4,6 +4,7 @@ import EmberOject, { computed } from '@ember/object';
 import { expect } from 'chai';
 import { describe, it, beforeEach, afterEach } from 'mocha';
 import { setupTest } from 'ember-mocha';
+import clearAllCookies from 'ember-cookies/clear-all-cookies';
 const { defineProperty } = Object;
 
 const COOKIE_NAME = 'test-cookie';
@@ -371,6 +372,21 @@ describe('CookiesService', function() {
 
           expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
         });
+      });
+    });
+
+    describe('clearing all cookies with test helper', function() {
+      it('clears all cookies', function() {
+        document.cookie = `test1=${randomString()};`;
+        document.cookie = `test2=${randomString()};`;
+
+        expect(this.subject().read('test1')).not.to.be.empty;
+        expect(this.subject().read('test2')).not.to.be.empty;
+
+        clearAllCookies();
+
+        expect(this.subject().read('test1')).to.be.empty;
+        expect(this.subject().read('test2')).to.be.empty;
       });
     });
 
