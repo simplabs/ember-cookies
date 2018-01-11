@@ -5,8 +5,9 @@ import { assert } from '@ember/debug';
 import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
 import Service from '@ember/service';
-import { merge } from '@ember/polyfills';
-const { keys, assign } = Object;
+import { merge, assign as emberAssign } from '@ember/polyfills';
+const { keys } = Object;
+const assign = Object.assign || emberAssign || merge;
 const DEFAULTS = { raw: false };
 
 export default Service.extend({
