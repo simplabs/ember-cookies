@@ -222,7 +222,7 @@ export default Service.extend({
   },      
     
   _getByteCount(value) {
-    return typeof(value) === 'string' ? encodeURI(s).split(/%(?:u[0-9A-F]{2})?[0-9A-F]{2}|./).length - 1 : 0;
+    return typeof(value) === 'string' ? encodeURI(value).split(/%(?:u[0-9A-F]{2})?[0-9A-F]{2}|./).length - 1 : 0;
   }    
     
 });
