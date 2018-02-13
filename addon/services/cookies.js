@@ -9,6 +9,7 @@ import { merge, assign as emberAssign } from '@ember/polyfills';
 const { keys } = Object;
 const assign = Object.assign || emberAssign || merge;
 const DEFAULTS = { raw: false };
+const MAX_COOKIE_BYTE_LENGTH = 4096;
 
 export default Service.extend({
   _isFastBoot: reads('_fastBoot.isFastBoot'),
@@ -76,6 +77,8 @@ export default Service.extend({
     assert('Cookies cannot be set to be HTTP-only as those cookies would not be accessible by the Ember.js application itself when running in the browser!', !options.httpOnly);
     assert("Cookies cannot be set as signed as signed cookies would not be modifyable in the browser as it has no knowledge of the express server's signing key!", !options.signed);
     assert('Cookies cannot be set with both maxAge and an explicit expiration time!', isEmpty(options.expires) || isEmpty(options.maxAge));
+    assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));
+      
     value = this._encodeValue(value, options.raw);
 
     if (this.get('_isFastBoot')) {
@@ -212,5 +215,14 @@ export default Service.extend({
     }
 
     return cookie;
-  }
+  },
+    
+  _isCookieSizeAcceptable(value) {
+    return this._getByteCount(value) < MAX_COOKIE_BYTE_LENGTH;
+  },      
+    
+  _getByteCount(value) {
+    return typeof(value) === 'string' ? encodeURI(s).split(/%(?:u[0-9A-F]{2})?[0-9A-F]{2}|./).length - 1 : 0;
+  }    
+    
 });
