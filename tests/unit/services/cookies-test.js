@@ -306,6 +306,15 @@ describe('CookiesService', function() {
 
         this.subject().write(COOKIE_NAME, 'test', { path: '/sample-path', maxAge: 1000 });
       });
+
+      it('throws when a larger than allowed cookie is set', function() {
+        expect(() => {
+          let value = "";
+          for(let i = 0; i < 400; i++) { value += Math.random().toString(36).substring(2) }
+          this.subject().write(COOKIE_NAME, value);
+        }).to.throw();    
+      });
+           
     });
 
     describe('clearing a cookie', function() {
