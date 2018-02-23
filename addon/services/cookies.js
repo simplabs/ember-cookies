@@ -77,10 +77,12 @@ export default Service.extend({
     assert('Cookies cannot be set to be HTTP-only as those cookies would not be accessible by the Ember.js application itself when running in the browser!', !options.httpOnly);
     assert("Cookies cannot be set as signed as signed cookies would not be modifyable in the browser as it has no knowledge of the express server's signing key!", !options.signed);
     assert('Cookies cannot be set with both maxAge and an explicit expiration time!', isEmpty(options.expires) || isEmpty(options.maxAge));
-    assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));
       
     value = this._encodeValue(value, options.raw);
-
+      
+    assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));  
+      
+      
     if (this.get('_isFastBoot')) {
       this._writeFastBootCookie(name, value, options);
     } else {
@@ -218,11 +220,18 @@ export default Service.extend({
   },
     
   _isCookieSizeAcceptable(value) {
-    return this._getByteCount(value) < MAX_COOKIE_BYTE_LENGTH;
-  },      
+    // Counting bytes varies Pre-ES6 and in ES6
+    // This snippet counts the bytes in the value
+    // about to be stored as the cookie:
+    // See https://stackoverflow.com/a/25994411/6657064
+    let _countUtf8Bytes = function (s){
+        var b = 0, i = 0, c;
+        for(;c=s.charCodeAt(i++);b+=c>>11?3:c>>7?2:1);
+        return b;
+    }
     
-  _getByteCount(value) {
-    return typeof(value) === 'string' ? encodeURI(value).split(/%(?:u[0-9A-F]{2})?[0-9A-F]{2}|./).length - 1 : 0;
-  }    
+    let _byteCount = _countUtf8Bytes(value);
+    return _byteCount < MAX_COOKIE_BYTE_LENGTH;
+  } 
     
 });
