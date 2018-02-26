@@ -82,7 +82,6 @@ export default Service.extend({
       
     assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));  
       
-      
     if (this.get('_isFastBoot')) {
       this._writeFastBootCookie(name, value, options);
     } else {
@@ -224,13 +223,9 @@ export default Service.extend({
     // This snippet counts the bytes in the value
     // about to be stored as the cookie:
     // See https://stackoverflow.com/a/25994411/6657064
-    let _countUtf8Bytes = function (s){
-        var b = 0, i = 0, c;
-        for(;c=s.charCodeAt(i++);b+=c>>11?3:c>>7?2:1);
-        return b;
-    }
-    
-    let _byteCount = _countUtf8Bytes(value);
+    let _byteCount = 0, i = 0, c;
+    for(;c=value.charCodeAt(i++);_byteCount+=c>>11?3:c>>7?2:1);
+      
     return _byteCount < MAX_COOKIE_BYTE_LENGTH;
   } 
     
