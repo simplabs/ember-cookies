@@ -20,12 +20,12 @@ Install `ember-cookies` with
 
 ```js
 // app/controllers/application.js
-import Ember from 'ember';
-
-const { inject: { service }, computed } = Ember;
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 const { keys } = Object;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   cookies: service(),
 
   allCookies: computed(function() {
