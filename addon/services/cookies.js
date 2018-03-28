@@ -77,11 +77,11 @@ export default Service.extend({
     assert('Cookies cannot be set to be HTTP-only as those cookies would not be accessible by the Ember.js application itself when running in the browser!', !options.httpOnly);
     assert("Cookies cannot be set as signed as signed cookies would not be modifyable in the browser as it has no knowledge of the express server's signing key!", !options.signed);
     assert('Cookies cannot be set with both maxAge and an explicit expiration time!', isEmpty(options.expires) || isEmpty(options.maxAge));
-      
+
     value = this._encodeValue(value, options.raw);
-      
-    assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));  
-      
+
+    assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));
+
     if (this.get('_isFastBoot')) {
       this._writeFastBootCookie(name, value, options);
     } else {
@@ -217,16 +217,22 @@ export default Service.extend({
 
     return cookie;
   },
-    
+
   _isCookieSizeAcceptable(value) {
     // Counting bytes varies Pre-ES6 and in ES6
     // This snippet counts the bytes in the value
     // about to be stored as the cookie:
     // See https://stackoverflow.com/a/25994411/6657064
-    let _byteCount = 0, i = 0, c;
-    for(;c=value.charCodeAt(i++);_byteCount+=c>>11?3:c>>7?2:1);
-      
+    let _byteCount = 0;
+    let i = 0;
+    let c;
+    while ((c = value.charCodeAt(i++))) {
+      /* eslint-disable no-bitwise */
+      _byteCount += c >> 11 ? 3 : c >> 7 ? 2 : 1;
+      /* eslint-enable no-bitwise */
+    }
+
     return _byteCount < MAX_COOKIE_BYTE_LENGTH;
-  } 
-    
+  }
+
 });
