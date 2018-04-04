@@ -9,6 +9,7 @@ import { merge, assign as emberAssign } from '@ember/polyfills';
 const { keys } = Object;
 const assign = Object.assign || emberAssign || merge;
 const DEFAULTS = { raw: false };
+const MAX_COOKIE_BYTE_LENGTH = 4096;
 
 export default Service.extend({
   _isFastBoot: reads('_fastBoot.isFastBoot'),
@@ -30,7 +31,7 @@ export default Service.extend({
     return filtered.reduce((acc, cookie) => {
       if (!isEmpty(cookie)) {
         let [key, value] = cookie;
-        acc[key.trim()] = value.trim();
+        acc[key.trim()] = (value || '').trim();
       }
       return acc;
     }, {});
@@ -76,7 +77,10 @@ export default Service.extend({
     assert('Cookies cannot be set to be HTTP-only as those cookies would not be accessible by the Ember.js application itself when running in the browser!', !options.httpOnly);
     assert("Cookies cannot be set as signed as signed cookies would not be modifyable in the browser as it has no knowledge of the express server's signing key!", !options.signed);
     assert('Cookies cannot be set with both maxAge and an explicit expiration time!', isEmpty(options.expires) || isEmpty(options.maxAge));
+
     value = this._encodeValue(value, options.raw);
+
+    assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));
 
     if (this.get('_isFastBoot')) {
       this._writeFastBootCookie(name, value, options);
@@ -90,6 +94,17 @@ export default Service.extend({
 
     options.expires = new Date('1970-01-01');
     this.write(name, null, options);
+  },
+
+  exists(name) {
+    let all;
+    if (this.get('_isFastBoot')) {
+      all = this.get('_fastBootCookies');
+    } else {
+      all = this.get('_documentCookies');
+    }
+
+    return all.hasOwnProperty(name);
   },
 
   _writeDocumentCookie(name, value, options = {}) {
@@ -178,7 +193,7 @@ export default Service.extend({
 
   _filterDocumentCookies(unfilteredCookies) {
     return unfilteredCookies.map((c) => c.split('='))
-      .filter((c) => isPresent(c[0]) && isPresent(c[1]));
+      .filter((c) => c.length === 2 && isPresent(c[0]));
   },
 
   _serializeCookie(name, value, options = {}) {
@@ -201,5 +216,23 @@ export default Service.extend({
     }
 
     return cookie;
+  },
+
+  _isCookieSizeAcceptable(value) {
+    // Counting bytes varies Pre-ES6 and in ES6
+    // This snippet counts the bytes in the value
+    // about to be stored as the cookie:
+    // See https://stackoverflow.com/a/25994411/6657064
+    let _byteCount = 0;
+    let i = 0;
+    let c;
+    while ((c = value.charCodeAt(i++))) {
+      /* eslint-disable no-bitwise */
+      _byteCount += c >> 11 ? 3 : c >> 7 ? 2 : 1;
+      /* eslint-enable no-bitwise */
+    }
+
+    return _byteCount < MAX_COOKIE_BYTE_LENGTH;
   }
+
 });

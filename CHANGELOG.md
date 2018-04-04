@@ -1,3 +1,13 @@
+# 0.3.0
+
+* When writing a cookie, the written value is now checked to not exceed 4096
+  bytes, see #159.
+
+# 0.2.0
+
+* Add `exists` method to check for existence of a cookie (even with a falsy
+  value), see #158.
+
 # 0.1.3
 
 * A runtime error in Internet Explorer was fixed, see #149.

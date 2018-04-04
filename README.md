@@ -20,12 +20,12 @@ Install `ember-cookies` with
 
 ```js
 // app/controllers/application.js
-import Ember from 'ember';
-
-const { inject: { service }, computed } = Ember;
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 const { keys } = Object;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   cookies: service(),
 
   allCookies: computed(function() {
@@ -47,13 +47,17 @@ export default Ember.Controller.extend({
 
 The `cookies` service has methods for reading and writing cookies:
 
-* `read(name, options = {})`: reads the cookie with the given name, returns its value as a
-  `String`; options can be used to set `raw` (boolean, disables URL-decoding the value).
+* `read(name, options = {})`: reads the cookie with the given name, returns its
+  value as a `String`; options can be used to set `raw` (boolean, disables
+  URL-decoding the value).
 * `write(name, value, options = {})`: writes a cookie with the given name and
-  value; options can be used to set `domain`, `expires` (Date), `maxAge` (time in seconds), `path`, `secure`,
-  and `raw` (boolean, disables URL-encoding the value).
+  value; options can be used to set `domain`, `expires` (Date), `maxAge` (time
+  in seconds), `path`, `secure`, and `raw` (boolean, disables URL-encoding the
+  value).
 * `clear(name, options = {})`: clears the cookie so that future reads do not
   return a value; options can be used to specify `domain`, `path` or `secure`.
+* `exists(name)`: checks whether a cookie exists at all (even with a falsy
+  value) and returns `true` if that is the case or `false` otherwise.
 
 ## License
 
