@@ -90,6 +90,7 @@ export default Service.extend({
   },
 
   clear(name, options = {}) {
+    options = assign({}, options || {});
     assert('Expires, Max-Age, and raw options cannot be set when clearing cookies', isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.raw));
 
     options.expires = new Date('1970-01-01');
