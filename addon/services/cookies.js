@@ -122,7 +122,20 @@ export default Service.extend({
 
     this._cacheFastBootCookie(...arguments);
 
-    responseHeaders.append('set-cookie', serializedCookie);
+    let replaced = false;
+    let existing = responseHeaders.getAll('set-cookie');
+
+    for (let i = 0; i < existing.length; i++) {
+      if (existing[i].startsWith(`${name}=`)) {
+        existing[i] = serializedCookie;
+        replaced = true;
+        break;
+      }
+    }
+
+    if (!replaced) {
+      responseHeaders.append('set-cookie', serializedCookie);
+    }
   },
 
   _cacheFastBootCookie(name, value, options = {}) {
