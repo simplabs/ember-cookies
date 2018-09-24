@@ -73,7 +73,6 @@ export default Service.extend({
 
   write(name, value, options = {}) {
     options = assign({}, DEFAULTS, options || {});
-    assert('Cookies cannot be set to be HTTP-only as those cookies would not be accessible by the Ember.js application itself when running in the browser!', !options.httpOnly);
     assert("Cookies cannot be set as signed as signed cookies would not be modifyable in the browser as it has no knowledge of the express server's signing key!", !options.signed);
     assert('Cookies cannot be set with both maxAge and an explicit expiration time!', isEmpty(options.expires) || isEmpty(options.maxAge));
 
@@ -84,6 +83,7 @@ export default Service.extend({
     if (this.get('_isFastBoot')) {
       this._writeFastBootCookie(name, value, options);
     } else {
+      assert('Cookies cannot be set to be HTTP-only from a browser!', !options.httpOnly);
       this._writeDocumentCookie(name, value, options);
     }
   },
@@ -210,6 +210,9 @@ export default Service.extend({
     }
     if (options.secure) {
       cookie = `${cookie}; secure`;
+    }
+    if (options.httpOnly) {
+      cookie = `${cookie}; httpOnly`;
     }
     if (!isEmpty(options.path)) {
       cookie = `${cookie}; path=${options.path}`;
