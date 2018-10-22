@@ -23,12 +23,6 @@ describe('CookiesService', function() {
       }).to.throw();
     });
 
-    it('throws when the HTTP only option is set', function() {
-      expect(() => {
-        this.subject().write(COOKIE_NAME, 'test', { httpOnly: true });
-      }).to.throw();
-    });
-
     it('throws when both the expires and max age options are set', function() {
       expect(() => {
         this.subject().write(COOKIE_NAME, 'test', { expires: new Date(), maxAge: 1000 });
@@ -314,6 +308,11 @@ describe('CookiesService', function() {
         }).to.throw();
       });
 
+      it('throws when using the httpOnly option', function() {
+        expect(() => {
+          this.subject().write(COOKIE_NAME, 'test', { httpOnly: true });
+        }).to.throw();
+      });
     });
 
     describe('clearing a cookie', function() {
@@ -672,6 +671,21 @@ describe('CookiesService', function() {
         };
 
         this.subject().write(COOKIE_NAME, 'test', { path });
+      });
+
+      it('sets the httpOnly flag', function() {
+        this.fakeFastBoot.response.headers.append = function(headerName, headerValue) {
+          expect(headerName).to.equal('set-cookie');
+          expect(headerValue).to.equal(`${COOKIE_NAME}=test; httpOnly`);
+        };
+
+        this.subject().write(COOKIE_NAME, 'test', { httpOnly: true });
+      });
+
+      it('allows the httpOnly option', function() {
+        expect(() => {
+          this.subject().write(COOKIE_NAME, 'test', { httpOnly: true });
+        }).to.not.throw();
       });
     });
 
