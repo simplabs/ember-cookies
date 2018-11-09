@@ -436,10 +436,23 @@ describe('CookiesService', function() {
         })
       });
 
+      const responseHeaders = {};
+
       this.fakeFastBoot = {
         response: {
           headers: {
-            append() {}
+            getAll(name) {
+              if (name) {
+                return responseHeaders[name] || [];
+              } else {
+                return responseHeaders;
+              }
+            },
+            append(name, value) {
+              let entry = responseHeaders[name] || [];
+              responseHeaders[name] = entry;
+              entry.push(value);
+            }
           }
         },
         request: request.create()
@@ -594,6 +607,19 @@ describe('CookiesService', function() {
         };
 
         this.subject().write(COOKIE_NAME, value);
+      });
+
+      it('writes the same name only once', function() {
+        let value1 = randomString();
+        let value2 = randomString();
+
+        this.subject().write(COOKIE_NAME, value1);
+        this.subject().write(COOKIE_NAME, value2);
+
+        const headers = this.fakeFastBoot.response.headers.getAll('set-cookie');
+        expect(headers.length).to.equal(1);
+        expect(headers[0]).to.not.equal(`${COOKIE_NAME}=${value1}`);
+        expect(headers[0]).to.equal(`${COOKIE_NAME}=${value2}`);
       });
 
       it('URI-component-encodes the value', function() {
