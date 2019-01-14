@@ -140,7 +140,7 @@ export default Service.extend({
 
   _cacheFastBootCookie(name, value, options = {}) {
     let fastBootCache = this._fastBootCookiesCache || {};
-    let cachedOptions = merge({}, options);
+    let cachedOptions = assign({}, options);
 
     if (cachedOptions.maxAge) {
       let expires = new Date();
