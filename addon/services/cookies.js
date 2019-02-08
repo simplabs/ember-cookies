@@ -24,7 +24,7 @@ export default Service.extend({
     return document;
   }),
 
-  _documentCookies: computed(function() {
+  _getDocumentCookies() {
     let all = this.get('_document.cookie').split(';');
     let filtered = this._filterDocumentCookies(A(all));
 
@@ -35,9 +35,9 @@ export default Service.extend({
       }
       return acc;
     }, {});
-  }).volatile(),
+  },
 
-  _fastBootCookies: computed(function() {
+  _getFastBootCookies() {
     let fastBootCookies = this.get('_fastBoot.request.cookies');
     fastBootCookies = A(keys(fastBootCookies)).reduce((acc, name) => {
       let value = fastBootCookies[name];
@@ -50,7 +50,7 @@ export default Service.extend({
     this._fastBootCookiesCache = fastBootCookies;
 
     return this._filterCachedFastBootCookies(fastBootCookies);
-  }).volatile(),
+  },
 
   read(name, options = {}) {
     options = assign({}, DEFAULTS, options || {});
@@ -58,9 +58,9 @@ export default Service.extend({
 
     let all;
     if (this.get('_isFastBoot')) {
-      all = this.get('_fastBootCookies');
+      all = this._getFastBootCookies();
     } else {
-      all = this.get('_documentCookies');
+      all = this._getDocumentCookies();
     }
 
     if (name) {
@@ -99,9 +99,9 @@ export default Service.extend({
   exists(name) {
     let all;
     if (this.get('_isFastBoot')) {
-      all = this.get('_fastBootCookies');
+      all = this._getFastBootCookies();
     } else {
-      all = this.get('_documentCookies');
+      all = this._getDocumentCookies();
     }
 
     return all.hasOwnProperty(name);
