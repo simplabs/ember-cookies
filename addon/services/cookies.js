@@ -5,9 +5,9 @@ import { assert } from '@ember/debug';
 import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
 import Service from '@ember/service';
-import { merge, assign as emberAssign } from '@ember/polyfills';
+import { assign as emberAssign } from '@ember/polyfills';
 const { keys } = Object;
-const assign = Object.assign || emberAssign || merge;
+const assign = Object.assign || emberAssign;
 const DEFAULTS = { raw: false };
 const MAX_COOKIE_BYTE_LENGTH = 4096;
 
