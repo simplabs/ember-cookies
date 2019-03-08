@@ -5,7 +5,8 @@ import { serializeCookie } from 'ember-cookies/utils/serialize-cookie';
 const assign = Object.assign || emberAssign || merge;
 
 export default function(options = {}) {
-  assert('Max-Age option cannot be set when clearing cookies', isEmpty(options.maxAge));
+  assert('Cookies cannot be set to be HTTP-only from a browser!', !options.httpOnly);
+  assert('Expires, Max-Age, and raw options cannot be set when clearing cookies', isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.raw));
   options = assign({}, options, {
     expires: new Date(0)
   });

@@ -14,6 +14,30 @@ describe('clearAllCookies test helper', function() {
     }
   });
 
+  it('throws when the expires option is set', function() {
+    expect(() => {
+      clearAllCookies({ expires: new Date() });
+    }).to.throw();
+  });
+
+  it('throws when the max-age option is set', function() {
+    expect(() => {
+      clearAllCookies({ maxAge: 1000 });
+    }).to.throw();
+  });
+
+  it('throws when the raw option is set', function() {
+    expect(() => {
+      clearAllCookies({ raw: true });
+    }).to.throw();
+  });
+
+  it('throws when the httpOnly option is set', function() {
+    expect(() => {
+      clearAllCookies({ httpOnly: true });
+    }).to.throw();
+  });
+
   it('clears all cookies', function() {
     let value1 = randomString();
     let value2 = randomString();
