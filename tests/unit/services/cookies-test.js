@@ -101,8 +101,11 @@ describe('CookiesService', function() {
     });
 
     afterEach(function() {
+      let pathname = window.location.pathname;
+      pathname = pathname.substring(0, pathname.lastIndexOf('/'));
       document.cookie = `${COOKIE_NAME}=whatever; expires=${new Date(0).toUTCString()}`;
-      document.cookie = `${COOKIE_NAME}=whatever; path=${window.location.pathname}; expires=${new Date(0).toUTCString()}`;
+      document.cookie = `${COOKIE_NAME}=whatever; path=${pathname}; expires=${new Date(0).toUTCString()}`;
+      document.cookie = `${COOKIE_NAME}=whatever; path=${pathname}/; expires=${new Date(0).toUTCString()}`;
     });
 
     describe('reading a cookie', function() {
@@ -152,6 +155,7 @@ describe('CookiesService', function() {
 
       it('returns the cookie value for a cookie that was written for the same path', function() {
         let path = window.location.pathname;
+        path = path.substring(0, path.lastIndexOf('/'));
         let value = randomString();
         this.subject().write(COOKIE_NAME, value, { path });
 
@@ -328,7 +332,9 @@ describe('CookiesService', function() {
 
       it('clears the cookie', function() {
         let value = randomString();
-        document.cookie = `${COOKIE_NAME}=${value};`;
+        let pathname = window.location.pathname;
+        let path = pathname.substring(0, pathname.lastIndexOf('/'));
+        document.cookie = `${COOKIE_NAME}=${value}; path=${path};`;
 
         expect(this.subject().read(COOKIE_NAME)).to.eq(value);
 

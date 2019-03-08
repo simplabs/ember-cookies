@@ -9,7 +9,8 @@ module.exports = {
     'Firefox'
   ],
   launch_in_dev: [
-    'Chrome'
+    'Chrome',
+    'Firefox'
   ],
   browser_args: {
     Firefox: {
