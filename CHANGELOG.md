@@ -1,3 +1,17 @@
+# 0.4.0
+
+* The `httpOnly` option can now be specified for cookies that are set in
+  FastBoot, see #194.
+* A bug that would not replace an existing cookie but set it multiple times
+  with different values when calling `write` multiple times with different
+  values in FastBoot was fixed, see #195.
+* An invokation of `merge` that was triggering a deprecation was removed, see
+  #204.
+* Usages of the `volatile` computed property modified that were triggering
+  deprecations were removed, see #207.
+* Cookies with `=` in the value are now correctly read, see #201.
+* ember-cookies now uses Babel 7, see #192.
+
 # 0.3.1
 
 * A bug that prevented cookies from being read from the request header
