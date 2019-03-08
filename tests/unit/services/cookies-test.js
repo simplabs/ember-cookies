@@ -214,6 +214,14 @@ describe('CookiesService', function() {
 
         expect(this.subject().read(COOKIE_NAME)).to.eq(value);
       });
+
+      it('works when the cookie contains a "="', function() {
+        let value = `${randomString()}=${randomString()}`;
+        document.cookie = `${COOKIE_NAME}=${value};`;
+        let afterRoundtrip = this.subject().read(COOKIE_NAME);
+
+        expect(afterRoundtrip).to.eq(value);
+      });
     });
 
     describe('writing a cookie', function() {
@@ -592,6 +600,14 @@ describe('CookiesService', function() {
         this.fakeFastBoot.request.cookies = { aRequestCookie: requestValue };
 
         expect(this.subject().read()).to.deep.equal({ [COOKIE_NAME]: writtenValue, aRequestCookie: requestValue });
+      });
+
+      it('works when the cookie contains a "="', function() {
+        let value = `${randomString()}=${randomString()}`;
+        this.subject().write(COOKIE_NAME, value);
+        let afterRoundtrip = this.subject().read(COOKIE_NAME);
+
+        expect(afterRoundtrip).to.eq(value);
       });
     });
 

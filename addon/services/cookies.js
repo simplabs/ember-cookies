@@ -205,7 +205,10 @@ export default Service.extend({
   },
 
   _filterDocumentCookies(unfilteredCookies) {
-    return unfilteredCookies.map((c) => c.split('='))
+    return unfilteredCookies.map((c) => {
+      let separatorIndex = c.indexOf('=');
+      return [c.substring(0, separatorIndex), c.substring(separatorIndex + 1)];
+    })
       .filter((c) => c.length === 2 && isPresent(c[0]));
   },
 
