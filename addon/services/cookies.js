@@ -1,11 +1,12 @@
 import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
-import { isNone, typeOf, isPresent, isEmpty } from '@ember/utils';
+import { isNone, isPresent, isEmpty } from '@ember/utils';
 import { assert } from '@ember/debug';
 import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
 import Service from '@ember/service';
 import { merge, assign as emberAssign } from '@ember/polyfills';
+import { serializeCookie } from '../utils/serialize-cookie';
 const { keys } = Object;
 const assign = Object.assign || emberAssign || merge;
 const DEFAULTS = { raw: false };
@@ -213,28 +214,7 @@ export default Service.extend({
   },
 
   _serializeCookie(name, value, options = {}) {
-    let cookie = `${name}=${value}`;
-
-    if (!isEmpty(options.domain)) {
-      cookie = `${cookie}; domain=${options.domain}`;
-    }
-    if (typeOf(options.expires) === 'date') {
-      cookie = `${cookie}; expires=${options.expires.toUTCString()}`;
-    }
-    if (!isEmpty(options.maxAge)) {
-      cookie = `${cookie}; max-age=${options.maxAge}`;
-    }
-    if (options.secure) {
-      cookie = `${cookie}; secure`;
-    }
-    if (options.httpOnly) {
-      cookie = `${cookie}; httpOnly`;
-    }
-    if (!isEmpty(options.path)) {
-      cookie = `${cookie}; path=${options.path}`;
-    }
-
-    return cookie;
+    return serializeCookie(name, value, options);
   },
 
   _isCookieSizeAcceptable(value) {
