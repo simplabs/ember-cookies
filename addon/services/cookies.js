@@ -85,6 +85,8 @@ export default Service.extend({
       this._writeFastBootCookie(name, value, options);
     } else {
       assert('Cookies cannot be set to be HTTP-only from a browser!', !options.httpOnly);
+
+      options.path = options.path || this._normalizedDefaultPath();
       this._writeDocumentCookie(name, value, options);
     }
   },
@@ -94,6 +96,7 @@ export default Service.extend({
     assert('Expires, Max-Age, and raw options cannot be set when clearing cookies', isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.raw));
 
     options.expires = new Date('1970-01-01');
+    options.path = options.path || this._normalizedDefaultPath();
     this.write(name, null, options);
   },
 
@@ -232,6 +235,12 @@ export default Service.extend({
     }
 
     return _byteCount < MAX_COOKIE_BYTE_LENGTH;
-  }
+  },
 
+  _normalizedDefaultPath() {
+    if (!this.get('_isFastBoot')) {
+      let pathname = window.location.pathname;
+      return pathname.substring(0, pathname.lastIndexOf('/'));
+    }
+  }
 });
