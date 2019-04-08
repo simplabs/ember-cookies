@@ -2974,8 +2974,8 @@ ember-cli-version-checker@^3.0.0, ember-cli-version-checker@^3.0.1:
     semver "^5.6.0"
 
 ember-cli@~3.8.1:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.8.1.tgz#2a4f66cf9da3c9665658690e615479af32749807"
+  version "3.8.2"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.8.2.tgz#86b4aa603215277ba44261a9285ef1dc2b7bc702"
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/plugin-transform-modules-amd" "^7.2.0"
