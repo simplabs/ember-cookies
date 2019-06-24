@@ -2815,8 +2815,8 @@ ember-cli-chai@^0.5.0:
     rollup-plugin-node-resolve "^3.0.0"
 
 ember-cli-dependency-checker@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-dependency-checker/-/ember-cli-dependency-checker-3.1.0.tgz#b39c6b537a1457d77892edf5ddcfa025cd1401e2"
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-dependency-checker/-/ember-cli-dependency-checker-3.2.0.tgz#9202ad9e14d6fda33cffc22a11c343c2a8885330"
   dependencies:
     chalk "^2.3.0"
     find-yarn-workspace-root "^1.1.0"
