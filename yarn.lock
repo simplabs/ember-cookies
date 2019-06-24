@@ -3336,8 +3336,8 @@ eslint-config-simplabs@0.4.0:
     supports-color "^3.2.3"
 
 eslint-plugin-ember@^6.2.0:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-6.4.1.tgz#9b6fc99bbd86b4f43e9098a5c07c446eb2e64a08"
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-6.7.0.tgz#1c2eb60a3b5ef7d483bd6f3ecbeaff42667c98ba"
   dependencies:
     ember-rfc176-data "^0.3.9"
     snake-case "^2.1.0"
