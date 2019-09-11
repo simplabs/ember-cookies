@@ -2944,8 +2944,8 @@ ember-cli-eslint@^5.1.0:
     walk-sync "^1.0.0"
 
 ember-cli-fastboot@^2.0.4:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-fastboot/-/ember-cli-fastboot-2.1.3.tgz#4cdef4e1110d15d925efe1408c0386a2a75688d0"
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-fastboot/-/ember-cli-fastboot-2.2.0.tgz#202d4c3ebcf6e392d5348e17208dec9f04bab98f"
   dependencies:
     broccoli-concat "^3.7.1"
     broccoli-funnel "^2.0.1"
