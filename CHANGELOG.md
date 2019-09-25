@@ -1,3 +1,11 @@
+# 0.5.0
+
+* ember-cookies now requires Node 8, see #321.
+* The default cookie path is now normalized to not include a trailing slash (as
+  appended e.g. by Firefox), see #169.
+* The `clearAllCookies` helper function now accepts the `path`, `domain` and
+  `secure` options, see #197.
+
 # 0.4.0
 
 * The `httpOnly` option can now be specified for cookies that are set in
