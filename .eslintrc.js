@@ -3,5 +3,6 @@ module.exports = {
   extends: [
     'simplabs',
     'simplabs/plugins/ember',
+    'plugin:ember/recommended'
   ],
 };
