@@ -45,7 +45,7 @@
     "ember-source": "~3.13.2",
     "ember-try": "^1.1.0",
     "eslint-config-simplabs": "0.4.0",
-    "eslint-plugin-ember": "^6.2.0",
+    "eslint-plugin-ember": "^7.1.0",
     "eslint-plugin-mocha": "^6.1.1",
     "glob": "^7.1.2",
     "loader.js": "^4.5.1",
