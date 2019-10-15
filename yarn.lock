@@ -3723,8 +3723,8 @@ eslint-plugin-ember@^6.2.0:
     snake-case "^2.1.0"
 
 eslint-plugin-mocha@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-mocha/-/eslint-plugin-mocha-6.1.1.tgz#5a036f2f806e1a5fb7d19f7538ebeff3afb15377"
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-mocha/-/eslint-plugin-mocha-6.2.0.tgz#16ff9ce4d5a6a35af522d5db0ce3c8946566e4c1"
   dependencies:
     ramda "^0.26.1"
 
