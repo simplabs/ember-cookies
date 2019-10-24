@@ -1,4 +1,5 @@
 import { isNone, isPresent, isEmpty } from '@ember/utils';
+import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import Service from '@ember/service';
@@ -35,7 +36,7 @@ export default Service.extend({
   },
 
   _getFastBootCookies() {
-    let fastBootCookies = this._fastBoot.request.cookies;
+    let fastBootCookies = get(this._fastBoot, 'request.cookies');
     fastBootCookies = keys(fastBootCookies).reduce((acc, name) => {
       let value = fastBootCookies[name];
       acc[name] = { value };
@@ -113,7 +114,7 @@ export default Service.extend({
   },
 
   _writeFastBootCookie(name, value, options = {}) {
-    let responseHeaders = this._fastBoot.response.headers;
+    let responseHeaders = get(this._fastBoot, 'response.headers');
     let serializedCookie = this._serializeCookie(...arguments);
 
     if (!isEmpty(options.maxAge)) {
@@ -154,10 +155,10 @@ export default Service.extend({
   },
 
   _filterCachedFastBootCookies(fastBootCookies) {
-    let { path: requestPath, protocol } = this._fastBoot.request;
+    let { path: requestPath, protocol } = get(this._fastBoot, 'request');
 
     // cannot use deconstruct here
-    let host = this._fastBoot.request.host;
+    let host = get(this._fastBoot, 'request.host');
 
     return keys(fastBootCookies).reduce((acc, name) => {
       let { value, options } = fastBootCookies[name];
