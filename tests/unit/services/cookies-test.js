@@ -86,6 +86,9 @@ describe('CookiesService', function() {
 
   describe('in the browser', function() {
     beforeEach(function() {
+      this.fakeFastBoot = {
+        isFastBoot: false,
+      };
       this.fakeDocument = {
         // jscs:disable requireEnhancedObjectLiterals
         get cookie() {
@@ -96,7 +99,8 @@ describe('CookiesService', function() {
         }
         // jscs:enable requireEnhancedObjectLiterals
       };
-      this.subject().set('_document', this.fakeDocument);
+      this.subject()._document = this.fakeDocument;
+      this.subject()._fastBoot = this.fakeFastBoot;
     });
 
     afterEach(function() {
@@ -437,6 +441,7 @@ describe('CookiesService', function() {
       const responseHeaders = {};
 
       this.fakeFastBoot = {
+        isFastBoot: true,
         response: {
           headers: {
             getAll(name) {
@@ -456,7 +461,6 @@ describe('CookiesService', function() {
         request: request.create()
       };
       this.subject().setProperties({
-        _isFastBoot: true,
         _fastBoot: this.fakeFastBoot
       });
     });

@@ -1,5 +1,3 @@
-import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
 import { isNone, isPresent, isEmpty } from '@ember/utils';
 import { assert } from '@ember/debug';
 import { A } from '@ember/array';
@@ -13,20 +11,19 @@ const DEFAULTS = { raw: false };
 const MAX_COOKIE_BYTE_LENGTH = 4096;
 
 export default Service.extend({
-  _isFastBoot: reads('_fastBoot.isFastBoot'),
+  init() {
+    this._super(...arguments);
 
-  _fastBoot: computed(function() {
-    let owner = getOwner(this);
+    this._document = this._document || window.document;
+    if (typeof this._fastBoot === 'undefined') {
+      let owner = getOwner(this);
 
-    return owner.lookup('service:fastboot');
-  }),
-
-  _document: computed(function() {
-    return document;
-  }),
+      this._fastBoot = owner.lookup('service:fastboot');
+    }
+  },
 
   _getDocumentCookies() {
-    let all = this.get('_document.cookie').split(';');
+    let all = this._document.cookie.split(';');
     let filtered = this._filterDocumentCookies(A(all));
 
     return filtered.reduce((acc, cookie) => {
@@ -39,7 +36,7 @@ export default Service.extend({
   },
 
   _getFastBootCookies() {
-    let fastBootCookies = this.get('_fastBoot.request.cookies');
+    let fastBootCookies = this._fastBoot.request.cookies;
     fastBootCookies = A(keys(fastBootCookies)).reduce((acc, name) => {
       let value = fastBootCookies[name];
       acc[name] = { value };
@@ -58,7 +55,7 @@ export default Service.extend({
     assert('Domain, Expires, Max-Age, and Path options cannot be set when reading cookies', isEmpty(options.domain) && isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.path));
 
     let all;
-    if (this.get('_isFastBoot')) {
+    if (this._fastBoot.isFastBoot) {
       all = this._getFastBootCookies();
     } else {
       all = this._getDocumentCookies();
@@ -81,7 +78,7 @@ export default Service.extend({
 
     assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));
 
-    if (this.get('_isFastBoot')) {
+    if (this._fastBoot.isFastBoot) {
       this._writeFastBootCookie(name, value, options);
     } else {
       assert('Cookies cannot be set to be HTTP-only from a browser!', !options.httpOnly);
@@ -102,7 +99,7 @@ export default Service.extend({
 
   exists(name) {
     let all;
-    if (this.get('_isFastBoot')) {
+    if (this._fastBoot.isFastBoot) {
       all = this._getFastBootCookies();
     } else {
       all = this._getDocumentCookies();
@@ -113,11 +110,11 @@ export default Service.extend({
 
   _writeDocumentCookie(name, value, options = {}) {
     let serializedCookie = this._serializeCookie(name, value, options);
-    this.set('_document.cookie', serializedCookie);
+    this._document.cookie = serializedCookie;
   },
 
   _writeFastBootCookie(name, value, options = {}) {
-    let responseHeaders = this.get('_fastBoot.response.headers');
+    let responseHeaders = this._fastBoot.response.headers;
     let serializedCookie = this._serializeCookie(...arguments);
 
     if (!isEmpty(options.maxAge)) {
@@ -158,10 +155,10 @@ export default Service.extend({
   },
 
   _filterCachedFastBootCookies(fastBootCookies) {
-    let { path: requestPath, protocol } = this.get('_fastBoot.request');
+    let { path: requestPath, protocol } = this._fastBoot.request;
 
     // cannot use deconstruct here
-    let host = this.get('_fastBoot.request.host');
+    let host = this._fastBoot.request.host;
 
     return A(keys(fastBootCookies)).reduce((acc, name) => {
       let { value, options } = fastBootCookies[name];
@@ -238,7 +235,7 @@ export default Service.extend({
   },
 
   _normalizedDefaultPath() {
-    if (!this.get('_isFastBoot')) {
+    if (!this._fastBoot.isFastBoot) {
       let pathname = window.location.pathname;
       return pathname.substring(0, pathname.lastIndexOf('/'));
     }
