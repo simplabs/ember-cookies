@@ -1,6 +1,5 @@
 import { isNone, isPresent, isEmpty } from '@ember/utils';
 import { assert } from '@ember/debug';
-import { A } from '@ember/array';
 import { getOwner } from '@ember/application';
 import Service from '@ember/service';
 import { merge, assign as emberAssign } from '@ember/polyfills';
@@ -24,7 +23,7 @@ export default Service.extend({
 
   _getDocumentCookies() {
     let all = this._document.cookie.split(';');
-    let filtered = this._filterDocumentCookies(A(all));
+    let filtered = this._filterDocumentCookies(all);
 
     return filtered.reduce((acc, cookie) => {
       if (!isEmpty(cookie)) {
@@ -37,7 +36,7 @@ export default Service.extend({
 
   _getFastBootCookies() {
     let fastBootCookies = this._fastBoot.request.cookies;
-    fastBootCookies = A(keys(fastBootCookies)).reduce((acc, name) => {
+    fastBootCookies = keys(fastBootCookies).reduce((acc, name) => {
       let value = fastBootCookies[name];
       acc[name] = { value };
       return acc;
@@ -64,7 +63,7 @@ export default Service.extend({
     if (name) {
       return this._decodeValue(all[name], options.raw);
     } else {
-      A(keys(all)).forEach((name) => (all[name] = this._decodeValue(all[name], options.raw)));
+      keys(all).forEach((name) => (all[name] = this._decodeValue(all[name], options.raw)));
       return all;
     }
   },
@@ -160,7 +159,7 @@ export default Service.extend({
     // cannot use deconstruct here
     let host = this._fastBoot.request.host;
 
-    return A(keys(fastBootCookies)).reduce((acc, name) => {
+    return keys(fastBootCookies).reduce((acc, name) => {
       let { value, options } = fastBootCookies[name];
       options = options || {};
 
