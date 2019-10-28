@@ -328,6 +328,16 @@ describe('CookiesService', function() {
           this.subject().write(COOKIE_NAME, 'test', { httpOnly: true });
         }).to.throw();
       });
+
+      it('sets the sameSite flag', function() {
+        defineProperty(this.fakeDocument, 'cookie', {
+          set(value) {
+            expect(value).to.include('; SameSite=Strict');
+          }
+        });
+
+        this.subject().write(COOKIE_NAME, 'test', { sameSite: 'Strict' });
+      });
     });
 
     describe('clearing a cookie', function() {
@@ -722,6 +732,15 @@ describe('CookiesService', function() {
         expect(() => {
           this.subject().write(COOKIE_NAME, 'test', { httpOnly: true });
         }).to.not.throw();
+      });
+
+      it('sets the sameSite flag', function() {
+        this.fakeFastBoot.response.headers.append = function(headerName, headerValue) {
+          expect(headerName).to.equal('set-cookie');
+          expect(headerValue).to.equal(`${COOKIE_NAME}=test; SameSite=Strict`);
+        };
+
+        this.subject().write(COOKIE_NAME, 'test', { sameSite: 'Strict' });
       });
     });
 

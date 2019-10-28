@@ -21,6 +21,9 @@ export const serializeCookie = (name, value, options = {}) => {
   if (!isEmpty(options.path)) {
     cookie = `${cookie}; path=${options.path}`;
   }
+  if (!isEmpty(options.sameSite)) {
+    cookie = `${cookie}; SameSite=${options.sameSite}`;
+  }
 
   return cookie;
 };
