@@ -52,8 +52,8 @@ The `cookies` service has methods for reading and writing cookies:
   URL-decoding the value).
 * `write(name, value, options = {})`: writes a cookie with the given name and
   value; options can be used to set `domain`, `expires` (Date), `maxAge` (time
-  in seconds), `path`, `secure`, and `raw` (boolean, disables URL-encoding the
-  value).
+  in seconds), `path`, `secure`, `raw` (boolean, disables URL-encoding the
+  value) and `sameSite` (can be either `'strict'` or `'lax'`).
 * `clear(name, options = {})`: clears the cookie so that future reads do not
   return a value; options can be used to specify `domain`, `path` or `secure`.
 * `exists(name)`: checks whether a cookie exists at all (even with a falsy
