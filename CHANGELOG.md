@@ -1,3 +1,8 @@
+# 0.5.1
+
+* The `write` function now supports the `sameSite` option with values of
+  `'Strict'` or `'Lax'`, see #269.
+
 # 0.5.0
 
 * ember-cookies now requires Node 8, see #321.
