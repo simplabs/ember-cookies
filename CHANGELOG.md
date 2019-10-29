@@ -1,3 +1,8 @@
+# 0.5.2
+
+* A bug was fixed that prevented usage in projects that are not using FastBoot,
+  see #347.
+
 # 0.5.1
 
 * The `write` function now supports the `sameSite` option with values of
