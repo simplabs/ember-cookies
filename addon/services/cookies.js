@@ -55,7 +55,7 @@ export default Service.extend({
     assert('Domain, Expires, Max-Age, and Path options cannot be set when reading cookies', isEmpty(options.domain) && isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.path));
 
     let all;
-    if (this._fastBoot.isFastBoot) {
+    if (this._isFastBoot()) {
       all = this._getFastBootCookies();
     } else {
       all = this._getDocumentCookies();
@@ -78,7 +78,7 @@ export default Service.extend({
 
     assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));
 
-    if (this._fastBoot.isFastBoot) {
+    if (this._isFastBoot()) {
       this._writeFastBootCookie(name, value, options);
     } else {
       assert('Cookies cannot be set to be HTTP-only from a browser!', !options.httpOnly);
@@ -99,7 +99,7 @@ export default Service.extend({
 
   exists(name) {
     let all;
-    if (this._fastBoot.isFastBoot) {
+    if (this._isFastBoot()) {
       all = this._getFastBootCookies();
     } else {
       all = this._getDocumentCookies();
@@ -235,9 +235,13 @@ export default Service.extend({
   },
 
   _normalizedDefaultPath() {
-    if (!this._fastBoot.isFastBoot) {
+    if (!this._isFastBoot()) {
       let pathname = window.location.pathname;
       return pathname.substring(0, pathname.lastIndexOf('/'));
     }
+  },
+
+  _isFastBoot() {
+    return this._fastBoot && this._fastBoot.isFastBoot;
   }
 });
