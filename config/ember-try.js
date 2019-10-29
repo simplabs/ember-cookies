@@ -1,109 +1,256 @@
 /* eslint-env node */
 
-module.exports = {
-  useYarn: true,
-  scenarios: [
-    {
-      name: 'ember-1.13',
-      bower: {
-        dependencies: {
-          'ember': '~1.13.0'
+const getChannelURL = require('ember-source-channel-url');
+
+module.exports = function() {
+  return Promise.all([
+    getChannelURL('release'),
+    getChannelURL('beta'),
+    getChannelURL('canary')
+  ]).then(urls => {
+    const releaseUrl = urls[0];
+    const betaUrl = urls[1];
+    const canaryUrl = urls[2];
+    return {
+      useYarn: true,
+      scenarios: [
+        {
+          name: 'ember-1.13',
+          bower: {
+            dependencies: {
+              ember: '~1.13.0',
+              'ember-cli-shims': '0.0.6',
+              'ember-data': '~1.13.0',
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-cli-shims': null,
+              'ember-data': '~1.13.0',
+              'ember-source': null,
+            },
+          },
         },
-        resolutions: {
-          'ember': '~1.13.0'
-        }
-      },
-      npm: {
-        devDependencies: {
-          'ember-source': null
-        }
-      },
-    },
-    {
-      name: 'ember-lts-2.4',
-      bower: {
-        dependencies: {
-          'ember': 'components/ember#lts-2-4'
+        {
+          name: 'ember-2.0',
+          bower: {
+            dependencies: {
+              ember: '~2.0.0',
+              'ember-cli-shims': '0.0.6',
+              'ember-data': '~2.0.0',
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-cli-shims': null,
+              'ember-data': '~2.0.0',
+              'ember-source': null,
+            },
+          },
         },
-        resolutions: {
-          'ember': 'lts-2-4'
-        }
-      },
-      npm: {
-        devDependencies: {
-          'ember-source': null
-        }
-      },
-    },
-    {
-      name: 'ember-lts-2.8',
-      bower: {
-        dependencies: {
-          'ember': 'components/ember#lts-2-8'
+        {
+          name: 'ember-lts-2.4',
+          bower: {
+            dependencies: {
+              ember: 'components/ember#lts-2-4',
+              'ember-cli-shims': '0.1.0',
+              'ember-data': null,
+            },
+            resolutions: {
+              ember: 'lts-2-4',
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-cli-shims': null,
+              'ember-data': '~2.4.0',
+              'ember-source': null,
+            },
+          },
         },
-        resolutions: {
-          'ember': 'lts-2-8'
-        }
-      },
-      npm: {
-        devDependencies: {
-          'ember-source': null
-        }
-      },
-    },
-    {
-      name: 'ember-release',
-      bower: {
-        dependencies: {
-          'ember': 'components/ember#release'
+        {
+          name: 'ember-lts-2.8',
+          bower: {
+            dependencies: {
+              ember: 'components/ember#lts-2-8',
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+            resolutions: {
+              ember: 'lts-2-8',
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': '~2.8.0',
+              'ember-source': null,
+            },
+          },
         },
-        resolutions: {
-          'ember': 'release'
-        }
-      },
-      npm: {
-        devDependencies: {
-          'ember-source': null
-        }
-      },
-    },
-    {
-      name: 'ember-beta',
-      bower: {
-        dependencies: {
-          'ember': 'components/ember#beta'
+        {
+          name: 'ember-lts-2.12',
+          bower: {
+            dependencies: {
+              ember: null,
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': '~2.12.0',
+              'ember-source': '~2.12.0',
+            },
+          },
         },
-        resolutions: {
-          'ember': 'beta'
-        }
-      },
-      npm: {
-        devDependencies: {
-          'ember-source': null
-        }
-      },
-    },
-    {
-      name: 'ember-canary',
-      bower: {
-        dependencies: {
-          'ember': 'components/ember#canary'
+        {
+          name: 'ember-lts-2.16',
+          bower: {
+            dependencies: {
+              ember: null,
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': '~2.16.0',
+              'ember-source': '~2.16.0',
+            },
+          },
         },
-        resolutions: {
-          'ember': 'canary'
+        {
+          name: 'ember-lts-2.18',
+          bower: {
+            dependencies: {
+              ember: null,
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': '~2.18.0',
+              'ember-source': '~2.18.0',
+            },
+          },
+        },
+        {
+          name: 'ember-3.0',
+          bower: {
+            dependencies: {
+              ember: null,
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': '~3.0.0',
+              'ember-source': '~3.0.0',
+            },
+          },
+        },
+        {
+          name: 'ember-lts-3.4',
+          bower: {
+            dependencies: {
+              ember: null,
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': '~3.4.0',
+              'ember-source': '~3.4.0',
+            },
+          },
+        },
+        {
+          name: 'ember-lts-3.8',
+          bower: {
+            dependencies: {
+              ember: null,
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': '~3.8.0',
+              'ember-source': '~3.8.0',
+            },
+          },
+        },
+        {
+          name: 'ember-lts-3.12',
+          bower: {
+            dependencies: {
+              ember: null,
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': '~3.12.0',
+              'ember-source': '~3.12.0',
+            },
+          },
+        },
+        {
+          name: 'ember-release',
+          bower: {
+            dependencies: {
+              'ember-cli-shims': null,
+              'ember-data': null,
+            }
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': 'latest',
+              'ember-source': releaseUrl,
+            },
+          },
+        },
+        {
+          name: 'ember-beta',
+          bower: {
+            dependencies: {
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': 'beta',
+              'ember-source': betaUrl,
+            },
+          },
+        },
+        {
+          name: 'ember-canary',
+          bower: {
+            dependencies: {
+              'ember-cli-shims': null,
+              'ember-data': null,
+            },
+          },
+          npm: {
+            devDependencies: {
+              'ember-data': 'canary',
+              'ember-source': canaryUrl,
+            },
+          },
+        },
+        {
+          name: 'ember-default',
+          npm: {
+            devDependencies: {}
+          }
         }
-      },
-      npm: {
-        devDependencies: {
-          'ember-source': null
-        }
-      },
-    },
-    {
-      name: 'ember-default',
-      npm: {
-        devDependencies: {}
-      },
-    }
-  ]
+      ]
+    };
+  });
 };
