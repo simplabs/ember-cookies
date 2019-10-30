@@ -39,6 +39,7 @@ jobs:
         api_key:
           secure: PA0X+4BPH2ACTKsOJQ5/018XKB6OZ3jUR5le/8ILCIfsCJUTSe1qKjv2qu10fhRDsUd1/HXSiqDWk4xnbencrkK5QhYkpR+6r2ryu01yGXqy3sKHxSZRdy7to0XHMUY55l5avvZPCUOohQljdEqb2zksSP26AfIDq3hXmqjvLaKyN/rV7KzG5X+a77WO0BMXefogBGA5HV8o7irKNMaU04z5XoKvzqJoVH9Mjc58YPLtC/8BYIO0dpkBiAxdEkz1pioha1SRgtQEhvfcK+8xoo+iCMglx6FvbuHI4GRHLgBGYfBDzuebqCgKgY1oiMLVoZpzhFs/qLpUGsZMZLkGQD0OPDidrnDPHaGERJIu/GC5lPuyRAtIYSfTJCT93Y30ZyHSJwgDEu4x4wO3Xy+3uXqo1y1kx8DE2moDFhrxeDlTZTQdt1+HDmwTFwLn9iZHngJLU5Yzf+5dGV3eREig0pjyBSBKK1a2jZO/YOxUYeYUkDxRjon6DyGMwi+DP59HHsr23Shntt70lUrmyBJTfBo1OQDB0OzeyLN7n+Q/ybpFqO58uVRE2w+eGepm9pDWeb1uWX+tSvBc7PTBdE+8aAQkUDfCEIZ916Oq4ijpkW/Bt83LncxmLb9Sd8/UKyG0ozkZgvgTqbJaRQef9IewYv9tfsneDqYsSdDHSwUfQDw=
         on:
+          tags: true
           repo: simplabs/ember-cookies
 
 matrix:
