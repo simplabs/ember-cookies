@@ -17,7 +17,9 @@
     "lint": "eslint app addon blueprints config server test-support tests *.js",
     "nodetest": "node node-tests/runner.js",
     "start": "ember server",
-    "test": "ember try:each"
+    "test": "ember test",
+    "test:all": "ember try:each",
+    "test:one": "ember try:one"
   },
   "dependencies": {
     "ember-cli-babel": "^7.1.0",

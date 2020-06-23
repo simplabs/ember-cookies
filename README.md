@@ -1,3 +1,5 @@
+![CI](https://github.com/simplabs/ember-cookies/workflows/CI/badge.svg)
+
 # ember-cookies
 
 `ember-cookies` implements an abstract __cookie API that works both in the
