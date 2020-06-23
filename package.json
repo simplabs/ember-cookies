@@ -14,7 +14,7 @@
   "repository": "https://github.com/simplabs/ember-cookies",
   "scripts": {
     "build": "ember build",
-    "lint": "eslint app addon blueprints config server test-support tests *.js",
+    "lint": "eslint app addon config addon-test-support tests node-tests *.js",
     "nodetest": "node node-tests/runner.js",
     "start": "ember server",
     "test": "ember try:each"
