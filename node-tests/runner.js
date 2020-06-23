@@ -1,21 +1,22 @@
 /* global require, process */
-var glob = require('glob');
-var Mocha = require('mocha');
+let glob = require('glob');
+let Mocha = require('mocha');
 
-var root = 'node-tests/acceptance';
+let root = 'node-tests/acceptance';
 
-var mocha = new Mocha({
+let mocha = new Mocha({
   timeout: 5000,
   reporter: 'spec'
 });
 
-var testFiles = glob.sync(root + '/**/*-test.js');
+let testFiles = glob.sync(`${root}/**/*-test.js`);
 
 addFiles(mocha, testFiles);
 
 try {
   runMocha();
 } catch (error) {
+  // eslint-disable-next-line no-console
   console.error(error);
   process.exit(1);
 }

@@ -1,16 +1,15 @@
 /* global describe, before, after, it */
 /* jshint node:true */
-var chai = require('chai');
-var expect = chai.expect;
-var RSVP = require('rsvp');
-var AddonTestApp = require('ember-cli-addon-tests').AddonTestApp;
-var request = require('request');
-var request = RSVP.denodeify(request);
+let chai = require('chai');
+let expect = chai.expect;
+let RSVP = require('rsvp');
+let AddonTestApp = require('ember-cli-addon-tests').AddonTestApp;
+let request = RSVP.denodeify(require('request'));
 
 describe('cookies access', function() {
   this.timeout(600000);
 
-  var app;
+  let app;
 
   before(function() {
     app = new AddonTestApp();
@@ -33,14 +32,14 @@ describe('cookies access', function() {
       command: 'fastboot',
       additionalArguments: ['--host 0.0.0.0']
     }).then(function() {
-      var value = Math.random().toString(36).substring(2);
+      let value = Math.random().toString(36).substring(2);
 
-      var cookieJar = request.jar();
-      var cookie = request.cookie('test-cookie=' + value);
-      var url = 'http://localhost:49741';
+      let cookieJar = request.jar();
+      let cookie = request.cookie(`test-cookie=${value}`);
+      let url = 'http://localhost:49741';
       cookieJar.setCookie(cookie, url);
-      request({ url: url, jar: cookieJar }).then(function(response) {
-        expect(response.body).to.contain('cookie: ' + value);
+      request({ url, jar: cookieJar }).then(function(response) {
+        expect(response.body).to.contain(`cookie: ${value}`);
       });
     });
   });
