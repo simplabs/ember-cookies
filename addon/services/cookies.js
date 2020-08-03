@@ -155,7 +155,7 @@ export default Service.extend({
   },
 
   _filterCachedFastBootCookies(fastBootCookies) {
-    let { path: requestPath, protocol } = get(this._fastBoot, 'request');
+    let { path: requestPath } = get(this._fastBoot, 'request');
 
     // cannot use deconstruct here
     let host = get(this._fastBoot, 'request.host');
@@ -164,7 +164,7 @@ export default Service.extend({
       let { value, options } = fastBootCookies[name];
       options = options || {};
 
-      let { path: optionsPath, domain, expires, secure } = options;
+      let { path: optionsPath, domain, expires } = options;
 
       if (optionsPath && requestPath.indexOf(optionsPath) !== 0) {
         return acc;
@@ -175,10 +175,6 @@ export default Service.extend({
       }
 
       if (expires && expires < new Date()) {
-        return acc;
-      }
-
-      if (secure && !(protocol || '').match(/^https/)) {
         return acc;
       }
 

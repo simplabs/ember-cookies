@@ -205,21 +205,6 @@ describe('CookiesService', function() {
           expect(this.subject().read(COOKIE_NAME)).to.eq(value);
         });
 
-        it('returns undefined for a cookie that was written for another protocol (secure cookies vs. non-secure request)', function() {
-          let isHTTPS = window.location.protocol === 'https:';
-          this.subject().write(COOKIE_NAME, 'value', { secure: !isHTTPS });
-
-          expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
-        });
-
-        it('returns the cookie value for a cookie that was written for the same protocol', function() {
-          let isHTTPS = window.location.protocol === 'https:';
-          let value = randomString();
-          this.subject().write(COOKIE_NAME, value, { secure: isHTTPS });
-
-          expect(this.subject().read(COOKIE_NAME)).to.eq(value);
-        });
-
         it('works when the cookie contains a "="', function() {
           let value = `${randomString()}=${randomString()}`;
           document.cookie = `${COOKIE_NAME}=${value};`;
@@ -586,30 +571,6 @@ describe('CookiesService', function() {
       it('returns the cookie value for a cookie that has not yet reached its max age', function() {
         let value = randomString();
         this.subject().write(COOKIE_NAME, value, { maxAge: 99999999 });
-
-        expect(this.subject().read(COOKIE_NAME)).to.eq(value);
-      });
-
-      it('returns undefined for a cookie that was written for another protocol (secure cookies vs. non-secure request)', function() {
-        this.fakeFastBoot.request._host = 'http';
-        let value = randomString();
-        this.subject().write(COOKIE_NAME, value, { secure: true });
-
-        expect(this.subject().read(COOKIE_NAME)).to.be.undefined;
-      });
-
-      it('returns the cookie value for a cookie that was written for the same protocol ("https")', function() {
-        this.fakeFastBoot.request.protocol = 'https';
-        let value = randomString();
-        this.subject().write(COOKIE_NAME, value, { secure: true });
-
-        expect(this.subject().read(COOKIE_NAME)).to.eq(value);
-      });
-
-      it('returns the cookie value for a cookie that was written for the same protocol ("https:")', function() {
-        this.fakeFastBoot.request.protocol = 'https:';
-        let value = randomString();
-        this.subject().write(COOKIE_NAME, value, { secure: true });
 
         expect(this.subject().read(COOKIE_NAME)).to.eq(value);
       });
