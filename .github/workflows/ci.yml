@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - 'v*'
+  pull_request: {}
+  schedule:
+    - cron:  '0 3 * * *' # daily, at 3am
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        test-suite:
+          - ember-1.13
+          - ember-lts-2.4
+          - ember-lts-2.8
+          - ember-3.0
+          - ember-3.0
+          - ember-lts-3.4
+          - ember-lts-3.8
+          - ember-lts-3.12
+          - ember-release
+          - ember-beta
+          - ember-canary
+        include:
+          - test-suite: "test:one ember-canary"
+            allow-failure: true
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: get yarn cache dir
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-test-${{ matrix.test-suite }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: yarn install
+
+      - name: tests
+        run: yarn test:one ${{ matrix.test-suite }}
+        continue-on-error: ${{matrix.allow-failure}}
+
+  extra-tests:
+    name: Tests (Floating Dependenies)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: get yarn cache dir
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-test-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: yarn install --no-lockfile
+
+      - name: tests
+        run: yarn test
+        continue-on-error: true

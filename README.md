@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/simplabs/ember-cookies.svg?branch=master)](https://travis-ci.org/simplabs/ember-cookies)
+![CI](https://github.com/simplabs/ember-cookies/workflows/CI/badge.svg)
 
 # ember-cookies
 
