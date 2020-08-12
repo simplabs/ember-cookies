@@ -654,20 +654,12 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-transform-block-scoping@^7.10.4":
+"@babel/plugin-transform-block-scoping@^7.10.4", "@babel/plugin-transform-block-scoping@^7.8.3":
   version "7.10.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-block-scoping/-/plugin-transform-block-scoping-7.10.5.tgz#b81b8aafefbfe68f0f65f7ef397b9ece68a6037d"
   integrity sha512-6Ycw3hjpQti0qssQcA6AMSFDHeNJ++R6dIMnpRqUjFeBBTmTDPa8zgF90OVfTvAo11mXZTlVUViY1g8ffrURLg==
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/plugin-transform-block-scoping@^7.8.3":
-  version "7.10.4"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-block-scoping/-/plugin-transform-block-scoping-7.10.4.tgz#a670d1364bb5019a621b9ea2001482876d734787"
-  integrity sha512-J3b5CluMg3hPUii2onJDRiaVbPtKFPLEaV5dOPY5OeAbDi1iU/UbbFFTgwb7WnanaDy7bjU35kc26W3eM5Qa0A==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.10.4"
-    lodash "^4.17.13"
 
 "@babel/plugin-transform-classes@^7.10.4":
   version "7.10.4"
@@ -4206,9 +4198,9 @@ ember-source-channel-url@^3.0.0:
     node-fetch "^2.6.0"
 
 ember-source@~3.20.0:
-  version "3.20.3"
-  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.20.3.tgz#fdc0e8d9a402985783a2c53729f75abbb7b2ac95"
-  integrity sha512-Fpz0eVFcL4s74d2mw5D3RFGlhRcljB6N4RyjsuumwYTlg7UMrkDdlHy7A1ZI2tDw2Cz7uE7W2dKzSnCQcZGcVQ==
+  version "3.20.4"
+  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.20.4.tgz#582545ae3b20de5ffd9f8b43c42c94815e592291"
+  integrity sha512-ycWlaq7W63S3Nh7pMRU4oXNirBB9MbNGDN6hUgs3/qc1gjOUVGfGv0p2NPVcKXgqWtbiqrWGqCbp1iTay2MUpA==
   dependencies:
     "@babel/helper-module-imports" "^7.8.3"
     "@babel/plugin-transform-block-scoping" "^7.8.3"
