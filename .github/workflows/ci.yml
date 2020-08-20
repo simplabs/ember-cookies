@@ -17,14 +17,12 @@ jobs:
     strategy:
       matrix:
         test-suite:
-          - ember-1.13
-          - ember-lts-2.4
-          - ember-lts-2.8
-          - ember-3.0
           - ember-3.0
           - ember-lts-3.4
           - ember-lts-3.8
           - ember-lts-3.12
+          - ember-lts-3.16
+          - ember-lts-3.20
           - ember-release
           - ember-beta
           - ember-canary

@@ -3,10 +3,10 @@ import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import Service from '@ember/service';
-import { merge, assign as emberAssign } from '@ember/polyfills';
+import { assign as emberAssign } from '@ember/polyfills';
 import { serializeCookie } from '../utils/serialize-cookie';
 const { keys } = Object;
-const assign = Object.assign || emberAssign || merge;
+const assign = Object.assign || emberAssign;
 const DEFAULTS = { raw: false };
 const MAX_COOKIE_BYTE_LENGTH = 4096;
 
