@@ -2,6 +2,7 @@
   "name": "ember-cookies",
   "version": "0.5.2",
   "description": "Cookies abstraction for Ember.js that works both in the browser as well as with Fastboot on the server.",
+  "types": "./index.d.ts",
   "keywords": [
     "ember-addon"
   ],
@@ -26,6 +27,7 @@
     "ember-getowner-polyfill": "^1.1.0 || ^2.0.0"
   },
   "devDependencies": {
+    "@types/ember": "^3.16.0",
     "broccoli-asset-rev": "^3.0.0",
     "chai": "^4.1.0",
     "chalk": "^4.1.0",
