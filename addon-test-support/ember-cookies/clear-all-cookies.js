@@ -1,8 +1,8 @@
 import { assert } from '@ember/debug';
-import { merge, assign as emberAssign } from '@ember/polyfills';
+import { assign as emberAssign } from '@ember/polyfills';
 import { isEmpty } from '@ember/utils';
 import { serializeCookie } from 'ember-cookies/utils/serialize-cookie';
-const assign = Object.assign || emberAssign || merge;
+const assign = Object.assign || emberAssign;
 
 export default function(options = {}) {
   assert('Cookies cannot be set to be HTTP-only from a browser!', !options.httpOnly);
