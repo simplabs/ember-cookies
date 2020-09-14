@@ -105,7 +105,7 @@ export default Service.extend({
       all = this._getDocumentCookies();
     }
 
-    return all.hasOwnProperty(name);
+    return Object.prototype.hasOwnProperty.call(all, name);
   },
 
   _writeDocumentCookie(name, value, options = {}) {
