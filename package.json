@@ -57,12 +57,12 @@
     "symlink-or-copy": "^1.1.8"
   },
   "engines": {
-    "node": "10.* || >= 12.*",
+    "node": "10.* || >= 12.*"
+  },
+  "ember-addon": {
+    "configPath": "tests/dummy/config",
     "versionCompatibility": {
       "ember": ">=3.0"
     }
-  },
-  "ember-addon": {
-    "configPath": "tests/dummy/config"
   }
 }
