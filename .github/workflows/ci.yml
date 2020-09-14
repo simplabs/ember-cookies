@@ -49,6 +49,8 @@ jobs:
 
       - run: yarn install
 
+      - run: yarn lint:js
+
       - name: tests
         run: yarn test:one ${{ matrix.test-suite }}
         continue-on-error: ${{matrix.allow-failure}}
