@@ -1,5 +1,6 @@
 /* jshint expr:true */
-import EmberOject, { computed } from '@ember/object';
+import EmberOject from '@ember/object';
+import { reads } from '@ember/object/computed';
 
 import { expect } from 'chai';
 import { describe, it, beforeEach, afterEach } from 'mocha';
@@ -449,9 +450,7 @@ describe('CookiesService', function() {
             append() {}
           };
         },
-        host: computed(function() {
-          return this._host;
-        })
+        host: reads('_host')
       });
 
       const responseHeaders = {};
