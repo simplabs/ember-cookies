@@ -36,7 +36,7 @@ export default Service.extend({
   },
 
   _getFastBootCookies() {
-    let fastBootCookies = get(this._fastBoot, 'request.cookies');
+    let fastBootCookies = this._fastBoot.request.cookies;
     fastBootCookies = keys(fastBootCookies).reduce((acc, name) => {
       let value = fastBootCookies[name];
       acc[name] = { value };
@@ -132,7 +132,7 @@ export default Service.extend({
   },
 
   _writeFastBootCookie(name, value, options = {}) {
-    let responseHeaders = get(this._fastBoot, 'response.headers');
+    let responseHeaders = this._fastBoot.response.headers;
     let serializedCookie = this._serializeCookie(...arguments);
 
     if (!isEmpty(options.maxAge)) {
@@ -173,9 +173,10 @@ export default Service.extend({
   },
 
   _filterCachedFastBootCookies(fastBootCookies) {
-    let { path: requestPath } = get(this._fastBoot, 'request');
+    let { path: requestPath } = this._fastBoot.request;
 
     // cannot use deconstruct here
+    // eslint-disable-next-line ember/no-get
     let host = get(this._fastBoot, 'request.host');
 
     return keys(fastBootCookies).reduce((acc, name) => {

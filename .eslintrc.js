@@ -15,10 +15,7 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {
-    // TODO this should no longer be necessary with our Ember support matrix
-    'ember/no-get': 'off',
-  },
+  rules: {},
   overrides: [
     // node files
     {
