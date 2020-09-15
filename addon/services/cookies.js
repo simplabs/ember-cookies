@@ -52,7 +52,13 @@ export default Service.extend({
 
   read(name, options = {}) {
     options = assign({}, DEFAULTS, options || {});
-    assert('Domain, Expires, Max-Age, and Path options cannot be set when reading cookies', isEmpty(options.domain) && isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.path));
+    assert(
+      'Domain, Expires, Max-Age, and Path options cannot be set when reading cookies',
+      isEmpty(options.domain) &&
+        isEmpty(options.expires) &&
+        isEmpty(options.maxAge) &&
+        isEmpty(options.path)
+    );
 
     let all;
     if (this._isFastBoot()) {
@@ -64,19 +70,28 @@ export default Service.extend({
     if (name) {
       return this._decodeValue(all[name], options.raw);
     } else {
-      keys(all).forEach((name) => (all[name] = this._decodeValue(all[name], options.raw)));
+      keys(all).forEach(name => (all[name] = this._decodeValue(all[name], options.raw)));
       return all;
     }
   },
 
   write(name, value, options = {}) {
     options = assign({}, DEFAULTS, options || {});
-    assert("Cookies cannot be set as signed as signed cookies would not be modifyable in the browser as it has no knowledge of the express server's signing key!", !options.signed);
-    assert('Cookies cannot be set with both maxAge and an explicit expiration time!', isEmpty(options.expires) || isEmpty(options.maxAge));
+    assert(
+      "Cookies cannot be set as signed as signed cookies would not be modifyable in the browser as it has no knowledge of the express server's signing key!",
+      !options.signed
+    );
+    assert(
+      'Cookies cannot be set with both maxAge and an explicit expiration time!',
+      isEmpty(options.expires) || isEmpty(options.maxAge)
+    );
 
     value = this._encodeValue(value, options.raw);
 
-    assert(`Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`, this._isCookieSizeAcceptable(value));
+    assert(
+      `Cookies larger than ${MAX_COOKIE_BYTE_LENGTH} bytes are not supported by most browsers!`,
+      this._isCookieSizeAcceptable(value)
+    );
 
     if (this._isFastBoot()) {
       this._writeFastBootCookie(name, value, options);
@@ -90,7 +105,10 @@ export default Service.extend({
 
   clear(name, options = {}) {
     options = assign({}, options || {});
-    assert('Expires, Max-Age, and raw options cannot be set when clearing cookies', isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.raw));
+    assert(
+      'Expires, Max-Age, and raw options cannot be set when clearing cookies',
+      isEmpty(options.expires) && isEmpty(options.maxAge) && isEmpty(options.raw)
+    );
 
     options.expires = new Date('1970-01-01');
     options.path = options.path || this._normalizedDefaultPath();
@@ -202,11 +220,12 @@ export default Service.extend({
   },
 
   _filterDocumentCookies(unfilteredCookies) {
-    return unfilteredCookies.map((c) => {
-      let separatorIndex = c.indexOf('=');
-      return [c.substring(0, separatorIndex), c.substring(separatorIndex + 1)];
-    })
-      .filter((c) => c.length === 2 && isPresent(c[0]));
+    return unfilteredCookies
+      .map(c => {
+        let separatorIndex = c.indexOf('=');
+        return [c.substring(0, separatorIndex), c.substring(separatorIndex + 1)];
+      })
+      .filter(c => c.length === 2 && isPresent(c[0]));
   },
 
   _serializeCookie(name, value, options = {}) {
@@ -239,5 +258,5 @@ export default Service.extend({
 
   _isFastBoot() {
     return this._fastBoot && this._fastBoot.isFastBoot;
-  }
+  },
 });

@@ -6,7 +6,7 @@ var root = 'node-tests/acceptance';
 
 var mocha = new Mocha({
   timeout: 5000,
-  reporter: 'spec'
+  reporter: 'spec',
 });
 
 var testFiles = glob.sync(root + '/**/*-test.js');
@@ -21,13 +21,13 @@ try {
 }
 
 function addFiles(mocha, files) {
-  files = (typeof files === 'string') ? glob.sync(root + files) : files;
+  files = typeof files === 'string' ? glob.sync(root + files) : files;
   files.forEach(mocha.addFile.bind(mocha));
 }
 
 function runMocha() {
-  mocha.run(function(failures) {
-    process.on('exit', function() {
+  mocha.run(function (failures) {
+    process.on('exit', function () {
       process.exit(failures);
     });
   });
