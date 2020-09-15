@@ -4,8 +4,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var RSVP = require('rsvp');
 var AddonTestApp = require('ember-cli-addon-tests').AddonTestApp;
-var request = require('request');
-var request = RSVP.denodeify(request);
+var request = RSVP.denodeify(require('request'));
 
 describe('cookies access', function() {
   this.timeout(600000);
