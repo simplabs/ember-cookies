@@ -25,6 +25,7 @@
     "ember-cli-babel": "^7.1.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "chai": "^4.1.0",
     "chalk": "^4.1.0",
