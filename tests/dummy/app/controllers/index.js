@@ -7,7 +7,7 @@ export default Controller.extend({
   cookies: service(),
 
   allCookies: computed(function () {
-    let cookieService = this.get('cookies');
+    let cookieService = this.cookies;
     cookieService.write('now', new Date().getTime());
 
     let cookies = cookieService.read();
