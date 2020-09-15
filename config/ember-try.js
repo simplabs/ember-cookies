@@ -2,11 +2,11 @@
 
 const getChannelURL = require('ember-source-channel-url');
 
-module.exports = function() {
+module.exports = function () {
   return Promise.all([
     getChannelURL('release'),
     getChannelURL('beta'),
-    getChannelURL('canary')
+    getChannelURL('canary'),
   ]).then(urls => {
     const releaseUrl = urls[0];
     const betaUrl = urls[1];
@@ -98,10 +98,10 @@ module.exports = function() {
         {
           name: 'ember-default',
           npm: {
-            devDependencies: {}
-          }
-        }
-      ]
+            devDependencies: {},
+          },
+        },
+      ],
     };
   });
 };

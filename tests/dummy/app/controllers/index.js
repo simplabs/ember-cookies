@@ -6,7 +6,7 @@ const { keys } = Object;
 export default Controller.extend({
   cookies: service(),
 
-  allCookies: computed(function() {
+  allCookies: computed(function () {
     let cookieService = this.get('cookies');
     cookieService.write('now', new Date().getTime());
 
@@ -17,5 +17,5 @@ export default Controller.extend({
 
       return acc;
     }, []);
-  })
+  }),
 });
