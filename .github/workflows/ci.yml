@@ -36,17 +36,6 @@ jobs:
         with:
           node-version: 10.x
 
-      - name: get yarn cache dir
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-test-${{ matrix.test-suite }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - run: yarn install
 
       - run: yarn lint:js
@@ -64,17 +53,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.x
-
-      - name: get yarn cache dir
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-test-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - run: yarn install --no-lockfile
 
