@@ -25,11 +25,12 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 const { keys } = Object;
 
-export default Controller.extend({
-  cookies: service(),
+export default class ApplicationController extends Controller {
+  @service cookies;
 
-  allCookies: computed(function() {
-    let cookieService = this.get('cookies');
+  @computed
+  get allCookies () {
+    let cookieService = this.cookies;
     cookieService.write('now', new Date().getTime());
 
     let cookies = cookieService.read();
@@ -39,8 +40,8 @@ export default Controller.extend({
 
       return acc;
     }, []);
-  })
-});
+  }
+}
 ```
 
 ## API
