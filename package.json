@@ -55,7 +55,7 @@
     "glob": "^7.1.2",
     "loader.js": "^4.5.1",
     "mocha": "^8.1.0",
-    "prettier": "2.2.1",
+    "prettier": "2.3.0",
     "request": "^2.81.0",
     "rsvp": "^4.6.1",
     "symlink-or-copy": "^1.1.8"
