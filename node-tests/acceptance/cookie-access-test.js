@@ -1,4 +1,3 @@
-/* global describe, before, after, it */
 /* jshint node:true */
 var chai = require('chai');
 var expect = chai.expect;

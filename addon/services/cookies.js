@@ -10,9 +10,9 @@ const assign = Object.assign || emberAssign;
 const DEFAULTS = { raw: false };
 const MAX_COOKIE_BYTE_LENGTH = 4096;
 
-export default Service.extend({
-  init() {
-    this._super(...arguments);
+export default class CookiesService extends Service {
+  constructor() {
+    super(...arguments);
 
     this._document = this._document || window.document;
     if (typeof this._fastBoot === 'undefined') {
@@ -20,7 +20,7 @@ export default Service.extend({
 
       this._fastBoot = owner.lookup('service:fastboot');
     }
-  },
+  }
 
   _getDocumentCookies() {
     let all = this._document.cookie.split(';');
@@ -33,7 +33,7 @@ export default Service.extend({
       }
       return acc;
     }, {});
-  },
+  }
 
   _getFastBootCookies() {
     let fastBootCookies = this._fastBoot.request.cookies;
@@ -48,7 +48,7 @@ export default Service.extend({
     this._fastBootCookiesCache = fastBootCookies;
 
     return this._filterCachedFastBootCookies(fastBootCookies);
-  },
+  }
 
   read(name, options = {}) {
     options = assign({}, DEFAULTS, options || {});
@@ -73,7 +73,7 @@ export default Service.extend({
       keys(all).forEach(name => (all[name] = this._decodeValue(all[name], options.raw)));
       return all;
     }
-  },
+  }
 
   write(name, value, options = {}) {
     options = assign({}, DEFAULTS, options || {});
@@ -101,7 +101,7 @@ export default Service.extend({
       options.path = options.path || this._normalizedDefaultPath();
       this._writeDocumentCookie(name, value, options);
     }
-  },
+  }
 
   clear(name, options = {}) {
     options = assign({}, options || {});
@@ -113,7 +113,7 @@ export default Service.extend({
     options.expires = new Date('1970-01-01');
     options.path = options.path || this._normalizedDefaultPath();
     this.write(name, null, options);
-  },
+  }
 
   exists(name) {
     let all;
@@ -124,12 +124,12 @@ export default Service.extend({
     }
 
     return Object.prototype.hasOwnProperty.call(all, name);
-  },
+  }
 
   _writeDocumentCookie(name, value, options = {}) {
     let serializedCookie = this._serializeCookie(name, value, options);
     this._document.cookie = serializedCookie;
-  },
+  }
 
   _writeFastBootCookie(name, value, options = {}) {
     let responseHeaders = this._fastBoot.response.headers;
@@ -155,7 +155,7 @@ export default Service.extend({
     if (!replaced) {
       responseHeaders.append('set-cookie', serializedCookie);
     }
-  },
+  }
 
   _cacheFastBootCookie(name, value, options = {}) {
     let fastBootCache = this._fastBootCookiesCache || {};
@@ -170,7 +170,7 @@ export default Service.extend({
 
     fastBootCache[name] = { value, options: cachedOptions };
     this._fastBootCookiesCache = fastBootCache;
-  },
+  }
 
   _filterCachedFastBootCookies(fastBootCookies) {
     let { path: requestPath } = this._fastBoot.request;
@@ -200,7 +200,7 @@ export default Service.extend({
       acc[name] = value;
       return acc;
     }, {});
-  },
+  }
 
   _encodeValue(value, raw) {
     if (isNone(value)) {
@@ -210,7 +210,7 @@ export default Service.extend({
     } else {
       return encodeURIComponent(value);
     }
-  },
+  }
 
   _decodeValue(value, raw) {
     if (isNone(value) || raw) {
@@ -218,7 +218,7 @@ export default Service.extend({
     } else {
       return decodeURIComponent(value);
     }
-  },
+  }
 
   _filterDocumentCookies(unfilteredCookies) {
     return unfilteredCookies
@@ -227,11 +227,11 @@ export default Service.extend({
         return [c.substring(0, separatorIndex), c.substring(separatorIndex + 1)];
       })
       .filter(c => c.length === 2 && isPresent(c[0]));
-  },
+  }
 
   _serializeCookie(name, value, options = {}) {
     return serializeCookie(name, value, options);
-  },
+  }
 
   _isCookieSizeAcceptable(value) {
     // Counting bytes varies Pre-ES6 and in ES6
@@ -248,16 +248,16 @@ export default Service.extend({
     }
 
     return _byteCount < MAX_COOKIE_BYTE_LENGTH;
-  },
+  }
 
   _normalizedDefaultPath() {
     if (!this._isFastBoot()) {
       let pathname = window.location.pathname;
       return pathname.substring(0, pathname.lastIndexOf('/'));
     }
-  },
+  }
 
   _isFastBoot() {
     return this._fastBoot && this._fastBoot.isFastBoot;
-  },
-});
+  }
+}
