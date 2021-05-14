@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 const getChannelURL = require('ember-source-channel-url');
+const { embroiderSafe, embroiderOptimized } = require('@embroider/test-setup');
 
 module.exports = function () {
   return Promise.all([
@@ -92,6 +93,20 @@ module.exports = function () {
             devDependencies: {},
           },
         },
+        embroiderSafe({
+          npm: {
+            devDependencies: {
+              webpack: '^5.0.0',
+            },
+          },
+        }),
+        embroiderOptimized({
+          npm: {
+            devDependencies: {
+              webpack: '^5.0.0',
+            },
+          },
+        }),
       ],
     };
   });
