@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-cookies',
+  name: require('./package').name,
 
   treeForAddonTestSupport(tree) {
     return this.preprocessJs(tree, '/', this.name, {
