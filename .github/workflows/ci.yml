@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: 12.x
 
       - run: yarn install
       - run: yarn lint:js
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: 12.x
 
       - run: yarn install
 
@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: 12.x
 
       - run: yarn install --no-lockfile
 
