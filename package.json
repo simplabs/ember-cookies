@@ -22,7 +22,8 @@
     "test:one": "ember try:one"
   },
   "dependencies": {
-    "ember-cli-babel": "^7.26.3"
+    "ember-cli-babel": "^7.26.3",
+    "ember-native-class-polyfill": "^1.0.6"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
