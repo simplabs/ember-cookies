@@ -38,9 +38,6 @@ jobs:
           - ember-release
           - ember-beta
           - ember-canary
-        include:
-          - test-suite: "test:one ember-canary"
-            allow-failure: true
 
     steps:
       - uses: actions/checkout@v1
