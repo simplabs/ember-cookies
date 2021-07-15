@@ -40,6 +40,7 @@
     "ember-cli-shims": "^1.1.0",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-load-initializers": "^2.0.0",
+    "ember-maybe-import-regenerator": "^0.1.6",
     "ember-mocha": "^0.16.2",
     "ember-resolver": "^8.0.0",
     "ember-sinon": "5.0.0",
