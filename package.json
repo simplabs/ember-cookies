@@ -22,51 +22,63 @@
     "test:one": "ember try:one"
   },
   "dependencies": {
-    "ember-cli-babel": "^7.1.0"
+    "ember-cli-babel": "^7.26.3",
+    "ember-native-class-polyfill": "^1.0.6"
   },
   "devDependencies": {
+    "@ember/optional-features": "^2.0.0",
+    "@ember/test-helpers": "^2.2.5",
+    "@embroider/test-setup": "^0.37.0",
+    "@glimmer/component": "^1.0.4",
+    "@glimmer/tracking": "^1.0.4",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "chai": "^4.1.0",
-    "chalk": "^4.1.0",
-    "ember-cli": "~3.26.0",
+    "ember-cli": "~3.26.1",
     "ember-cli-addon-tests": "^0.11.0",
     "ember-cli-chai": "^0.5.0",
-    "ember-cli-dependency-checker": "^3.0.0",
-    "ember-cli-fastboot": "^2.0.4",
-    "ember-cli-htmlbars": "^5.3.1",
-    "ember-cli-htmlbars-inline-precompile": "^3.0.0",
-    "ember-cli-inject-live-reload": "^2.0.1",
-    "ember-cli-shims": "^1.1.0",
-    "ember-disable-prototype-extensions": "^1.1.2",
-    "ember-load-initializers": "^2.0.0",
+    "ember-cli-dependency-checker": "^3.2.0",
+    "ember-cli-fastboot": "^2.2.3",
+    "ember-cli-htmlbars": "^5.7.1",
+    "ember-cli-inject-live-reload": "^2.0.2",
+    "ember-cli-sri": "^2.1.1",
+    "ember-cli-terser": "^4.0.1",
+    "ember-disable-prototype-extensions": "^1.1.3",
+    "ember-export-application-global": "^2.0.1",
+    "ember-load-initializers": "^2.1.2",
+    "ember-maybe-import-regenerator": "^0.1.6",
     "ember-mocha": "^0.16.2",
-    "ember-resolver": "^8.0.0",
+    "ember-page-title": "^6.2.1",
+    "ember-resolver": "^8.0.2",
     "ember-sinon": "5.0.0",
     "ember-source": "~3.27.0",
     "ember-source-channel-url": "^3.0.0",
-    "ember-try": "^1.1.0",
-    "eslint": "^7.9.0",
-    "eslint-config-prettier": "^8.0.0",
-    "eslint-plugin-ember": "^9.0.0",
-    "eslint-plugin-mocha": "^8.0.0",
+    "ember-try": "^1.4.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-ember": "^10.3.0",
+    "eslint-plugin-mocha": "^8.1.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "glob": "^7.1.2",
-    "loader.js": "^4.5.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "glob": "^7.1.7",
+    "loader.js": "^4.7.0",
     "mocha": "^8.1.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.3.1",
-    "request": "^2.81.0",
-    "rsvp": "^4.6.1",
+    "request": "^2.88.2",
+    "rsvp": "^4.8.5",
     "symlink-or-copy": "^1.1.8"
   },
   "engines": {
-    "node": "10.* || >= 12.*"
+    "node": ">= 12.*"
+  },
+  "ember": {
+    "edition": "octane"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "versionCompatibility": {
-      "ember": ">=3.0"
+      "ember": ">=3.4"
     }
   }
 }

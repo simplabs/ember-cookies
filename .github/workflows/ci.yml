@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
         with:
-          node-version: 10.x
+          node-version: 12.x
           cache: yarn
 
       - run: yarn install
@@ -31,7 +31,6 @@ jobs:
     strategy:
       matrix:
         test-suite:
-          - ember-3.0
           - ember-lts-3.4
           - ember-lts-3.8
           - ember-lts-3.12
@@ -40,15 +39,12 @@ jobs:
           - ember-release
           - ember-beta
           - ember-canary
-        include:
-          - test-suite: "test:one ember-canary"
-            allow-failure: true
 
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
         with:
-          node-version: 10.x
+          node-version: 12.x
           cache: yarn
 
       - run: yarn install
@@ -65,7 +61,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v2
         with:
-          node-version: 10.x
+          node-version: 12.x
           cache: yarn
 
       - run: yarn install --no-lockfile

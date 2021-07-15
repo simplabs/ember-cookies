@@ -1,6 +1,5 @@
 /* jshint expr:true */
 import EmberOject from '@ember/object';
-import { reads } from '@ember/object/computed';
 
 import { expect } from 'chai';
 import { describe, it, beforeEach, afterEach } from 'mocha';
@@ -447,16 +446,18 @@ describe('CookiesService', function () {
 
   describe('in the FastBoot server', function () {
     beforeEach(function () {
-      let request = EmberOject.extend({
-        init() {
-          this._super(...arguments);
+      let request = class Request extends EmberOject {
+        constructor() {
+          super(...arguments);
           this.cookies = {};
           this.headers = {
             append() {},
           };
-        },
-        host: reads('_host'),
-      });
+        }
+        get host() {
+          return this._host;
+        }
+      };
 
       const responseHeaders = {};
 
