@@ -64,7 +64,7 @@
     "loader.js": "^4.7.0",
     "mocha": "^8.1.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "2.3.1",
+    "prettier": "2.3.2",
     "request": "^2.88.2",
     "rsvp": "^4.8.5",
     "symlink-or-copy": "^1.1.8"
