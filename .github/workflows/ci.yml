@@ -30,7 +30,6 @@ jobs:
     strategy:
       matrix:
         test-suite:
-          - ember-3.0
           - ember-lts-3.4
           - ember-lts-3.8
           - ember-lts-3.12
