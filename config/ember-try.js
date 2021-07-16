@@ -96,14 +96,14 @@ module.exports = function () {
         embroiderSafe({
           npm: {
             devDependencies: {
-              webpack: '^5.0.0',
+              webpack: '5.38.1',
             },
           },
         }),
         embroiderOptimized({
           npm: {
             devDependencies: {
-              webpack: '^5.0.0',
+              webpack: '5.38.1',
             },
           },
         }),
