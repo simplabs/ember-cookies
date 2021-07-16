@@ -34,6 +34,7 @@
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "chai": "^4.1.0",
+    "ember-auto-import": "^2.0.2",
     "ember-cli": "~3.27.0",
     "ember-cli-addon-tests": "^0.11.0",
     "ember-cli-chai": "^0.5.0",
@@ -69,7 +70,8 @@
     "qunit": "^2.16.0",
     "request": "^2.88.2",
     "rsvp": "^4.8.5",
-    "symlink-or-copy": "^1.1.8"
+    "symlink-or-copy": "^1.1.8",
+    "webpack": "^5.44.0"
   },
   "engines": {
     "node": ">= 12.*"
