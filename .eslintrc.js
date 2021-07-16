@@ -46,12 +46,8 @@ module.exports = {
     {
       files: ['tests/**/*-test.js'],
       excludedFiles: ['tests/dummy/**'],
-      plugins: ['mocha'],
-      extends: ['plugin:mocha/recommended'],
-      rules: {
-        'mocha/no-hooks-for-single-case': 'off',
-        'mocha/no-setup-in-describe': 'off',
-      },
+      plugins: ['qunit'],
+      extends: ['plugin:qunit/recommended'],
     },
     // node test files
     {
