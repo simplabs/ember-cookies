@@ -1,44 +1,45 @@
-/* jshint expr:true */
-import { expect } from 'chai';
-import { describe, it, afterEach } from 'mocha';
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import clearAllCookies from 'ember-cookies/clear-all-cookies';
 
 function randomString() {
   return Math.random().toString(36).substring(2);
 }
 
-describe('clearAllCookies test helper', function () {
-  afterEach(function () {
+module('clearAllCookies test helper', function (hooks) {
+  setupTest(hooks);
+
+  hooks.afterEach(function () {
     for (let cookie of ['test1', 'test2']) {
       document.cookie = `${cookie}=whatever; expires=${new Date(0).toUTCString()}; path=/`;
     }
   });
 
-  it('throws when the expires option is set', function () {
-    expect(() => {
+  test('throws when the expires option is set', function (assert) {
+    assert.throws(() => {
       clearAllCookies({ expires: new Date() });
-    }).to.throw();
+    });
   });
 
-  it('throws when the max-age option is set', function () {
-    expect(() => {
+  test('throws when the max-age option is set', function (assert) {
+    assert.throws(() => {
       clearAllCookies({ maxAge: 1000 });
-    }).to.throw();
+    });
   });
 
-  it('throws when the raw option is set', function () {
-    expect(() => {
+  test('throws when the raw option is set', function (assert) {
+    assert.throws(() => {
       clearAllCookies({ raw: true });
-    }).to.throw();
+    });
   });
 
-  it('throws when the httpOnly option is set', function () {
-    expect(() => {
+  test('throws when the httpOnly option is set', function (assert) {
+    assert.throws(() => {
       clearAllCookies({ httpOnly: true });
-    }).to.throw();
+    });
   });
 
-  it('clears all cookies', function () {
+  test('clears all cookies', function (assert) {
     let value1 = randomString();
     let value2 = randomString();
     document.cookie = `test1=${value1};`;
@@ -46,11 +47,11 @@ describe('clearAllCookies test helper', function () {
 
     clearAllCookies();
 
-    expect(document.cookie).to.not.include(`test1=${value1}`);
-    expect(document.cookie).to.not.include(`test2=${value2}`);
+    assert.notOk(document.cookie.includes(`test1=${value1}`));
+    assert.notOk(document.cookie.includes(`test2=${value2}`));
   });
 
-  it('clears all cookies with a specified path', function () {
+  test('clears all cookies with a specified path', function (assert) {
     let pathname = window.location.pathname;
     let path = pathname.substring(0, pathname.lastIndexOf('/'));
     let value1 = randomString();
@@ -60,7 +61,7 @@ describe('clearAllCookies test helper', function () {
 
     clearAllCookies({ path });
 
-    expect(document.cookie).to.not.include(`test1=${value1}`);
-    expect(document.cookie).to.include(`test2=${value2}`);
+    assert.notOk(document.cookie.includes(`test1=${value1}`));
+    assert.ok(document.cookie.includes(`test2=${value2}`));
   });
 });
