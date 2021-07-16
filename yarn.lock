@@ -4586,7 +4586,7 @@ ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.8.1:
     ember-cli-version-checker "^2.1.2"
     semver "^5.5.0"
 
-ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.3, ember-cli-babel@^7.11.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.17.2, ember-cli-babel@^7.20.5, ember-cli-babel@^7.22.1, ember-cli-babel@^7.23.0, ember-cli-babel@^7.26.2, ember-cli-babel@^7.26.3, ember-cli-babel@^7.26.6, ember-cli-babel@^7.7.3:
+ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.3, ember-cli-babel@^7.11.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.17.2, ember-cli-babel@^7.20.5, ember-cli-babel@^7.22.1, ember-cli-babel@^7.23.0, ember-cli-babel@^7.23.1, ember-cli-babel@^7.26.2, ember-cli-babel@^7.26.3, ember-cli-babel@^7.26.6, ember-cli-babel@^7.7.3:
   version "7.26.6"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.26.6.tgz#322fbbd3baad9dd99e3276ff05bc6faef5e54b39"
   integrity sha512-040svtfj2RC35j/WMwdWJFusZaXmNoytLAMyBDGLMSlRvznudTxZjGlPV6UupmtTBApy58cEF8Fq4a+COWoEmQ==
@@ -5019,11 +5019,11 @@ ember-native-class-polyfill@^1.0.6:
     semver "^5.6.0"
 
 ember-page-title@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-6.2.1.tgz#aa2d539fab8eddb618289cdba91adf699debf7da"
-  integrity sha512-cfBDuP14KBJCdz/AeBQJFGnJbUHd2gmenG+i0ilR2kYX0G0zHAsseFZFuTNVZDNiQ8BnMdrdjRnfjx9Vdi/dag==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-6.2.2.tgz#980838c44e96cba1d00f42435d707936af627324"
+  integrity sha512-YTXA+cylZrh9zO0zwjlaAGReT2MVOxAMnVO1OOygFrs1JBs4D6CKV3tImoilg3AvIXFBeJfFNNUbJOdRd9IGGg==
   dependencies:
-    ember-cli-babel "^7.22.1"
+    ember-cli-babel "^7.23.1"
 
 ember-resolver@^8.0.2:
   version "8.0.2"
